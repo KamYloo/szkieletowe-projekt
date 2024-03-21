@@ -17,3 +17,5 @@
 W pliku requirements.txt umieszczacie wszystkie biblioteki które będziemy używać wraz z projektem w następujący sposób
 
   [nazwa_biblioteki]==[wersja]
+
+Info jak podłączyć bazę danych znajduje się na Trello
