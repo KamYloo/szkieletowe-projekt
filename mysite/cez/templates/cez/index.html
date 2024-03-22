@@ -3,8 +3,17 @@
 {% block title %}Glowna strona{% endblock %}
 
 {% block content %}
-    <h1>Strona główna!</h1>
-    <form method="post">
-        {{form.username}}
-    </form>
+    {% if user.is_authenticated %}
+          <h1>Witaj {{user.username}}</h1>
+            <div class="pt-3">
+                <small class="text-muted">
+                    <a class="ml-2" href="{% url 'profile' %}">Profil</a>
+                    <a class="ml-2" href="{% url 'logout' %}">Wyloguj się</a>
+                </small>
+            </div>
+        {% else %}
+            <div class="pt-3">
+                <a href="{% url 'login' %}"><h1>Zaloguj sie</h1></a>
+            </div>
+        {% endif %}
 {% endblock %}
