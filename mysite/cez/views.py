@@ -30,10 +30,9 @@ def submit_assignment(request, assignment_id):
     if request.method == 'POST':
         form = SubmissionForm(request.POST, request.FILES, instance=submission_instance)
         if form.is_valid():
-            submission = form.save(commit = False)
-            submission.assignment = assignment
-            submission.student = request.user.profile
-            submission.save()
+            form.instance.assignment = assignment
+            form.instance.student = request.user.profile
+            form.save()
             messages.success(request, 'Your answer has been submitted!')
             return redirect('assignment')
     else:
