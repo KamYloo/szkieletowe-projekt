@@ -20,6 +20,7 @@ for (options of option1) {
     }
 }
 
+
 for (options of option2) {
     options.onclick = function() {
         text2.innerHTML = this.textContent;
