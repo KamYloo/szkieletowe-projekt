@@ -1,0 +1,31 @@
+{% load static %}
+
+    <header>
+        <div class="logo">
+          <h2><a href="{% url 'index' %}">SkillForge</a></h2>
+        </div>
+
+        <nav>
+          <ul>
+            <li class="active"><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'courses' %}">Courses</a></li>
+            <li><a href="#">Chat</a></li>
+            <li><a href="#">Help</a></li>
+              {% if request.user.is_authenticated %}
+              <li class="btn">
+                  <div class="user_header">
+                      <img src="{% static 'images/guest-user.webp' %}" />
+                      <p>{{user.username}}</p>
+                  </div>
+                <a href="{% url 'logout' %}">Wyloguj</a></li>
+              {% else %}
+            <li class="btn">
+                <div class="user_header">
+                      <img src="{% static 'images/guest-user.webp' %}" />
+                      <p>nick</p>
+                  </div>
+                <a href="{% url 'login' %}">Login</a></li>
+               {% endif %}
+          </ul>
+        </nav>
+      </header>

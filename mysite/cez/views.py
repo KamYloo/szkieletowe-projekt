@@ -11,6 +11,12 @@ from .forms import SubmissionForm
 def index(request):
     return render(request, "cez/index.html")
 
+def course(request):
+    return render(request, "cez/courses.html")
+
+def create_course(request):
+    return render(request, "cez/create_course_form.html")
+
 # def assignment(request):
 #     return render(request, "cez/assignment.html", {"assignments": Assignment.objects.all()})
 
