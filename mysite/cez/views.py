@@ -14,6 +14,15 @@ from django.forms import modelformset_factory
 def index(request):
     return render(request, "cez/index.html")
 
+def course(request):
+    return render(request, "cez/courses.html")
+
+def create_course(request):
+    return render(request, "cez/create_course_form.html")
+
+# def assignment(request):
+#     return render(request, "cez/assignment.html", {"assignments": Assignment.objects.all()})
+
 class AssignmentListView(ListView):
     model = Assignment
     template_name = "cez/assignment.html"

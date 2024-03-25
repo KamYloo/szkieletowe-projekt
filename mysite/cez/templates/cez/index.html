@@ -1,8 +1,9 @@
 {% extends "../base/base.html" %}
-
+{% load static %}
 {% block title %}Glowna strona{% endblock %}
 
 {% block content %}
+<<<<<<< HEAD
     {% if user.is_authenticated %}
           <h1>Witaj {{user.username}}</h1>
             <div class="pt-3">
@@ -18,4 +19,46 @@
                 <a href="{% url 'login' %}"><h1>Zaloguj sie</h1></a>
             </div>
         {% endif %}
+=======
+
+      <div class="content">
+        <div class="main-text">
+          <h6>#1 Online</h6>
+          <h3>Education Platform</h3>
+          <h1>SkillForge</h1>
+          <p>
+            Dynamiczna platforma edukacyjna oferująca kursy online, które
+            pomagają rozwijać umiejętności w różnych dziedzinach. Nasze kursy są
+            starannie opracowane przez ekspertów z danej branży, aby zapewnić
+            uczestnikom najwyższą jakość nauki. Dzięki interaktywnym modułom,
+            praktycznym zadaniom i wsparciu instruktorów, uczestnicy mogą
+            zdobywać nowe umiejętności w elastyczny sposób, dostosowując naukę
+            do swojego harmonogramu. Niezależnie od tego, czy chcesz rozwinąć
+            swoje umiejętności zawodowe, zdobyć nowe hobby czy pogłębić swoją
+            wiedzę, SkillForge ma kurs dla Ciebie.
+          </p>
+          <a href="{% url 'courses' %}">Go Learn</a>
+        </div>
+        <div class="social">
+          <a href="#" class="btn">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="btn">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="btn">
+            <i class="fab fa-google"></i>
+          </a>
+          <a href="#" class="btn">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="btn">
+            <i class="fab fa-youtube"></i>
+          </a>
+        </div>
+        <div class="image">
+          <img src="{% static 'images/start_background.png' %}" />
+        </div>
+      </div>
+>>>>>>> 93906bae700d77466b4a73349cb92911d055112c
 {% endblock %}

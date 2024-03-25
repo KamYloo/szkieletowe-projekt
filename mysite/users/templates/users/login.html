@@ -1,14 +1,50 @@
-{% extends "base/base.html" %}
+<!DOCTYPE html>
 {% load crispy_forms_tags %}
-{% block title %}Logowanie{% endblock %}
-
+{% load static %}
 {% block content %}
-    <h1>Logowanie!</h1>
-    <form method="post">
-      {% csrf_token %}
-      <fieldset class="form-group">
-            {{form|crispy}}
-        </fieldset>
-      <button type="submit">Zaloguj</button>
-    </form>
+
+
+
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/user_style.css' %}" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <title>Login Form</title>
+  </head>
+  <body>
+    <div class="wrapper">
+        <form method="post">
+    {% csrf_token %}
+    <h1>Login</h1>
+    <div class="input-box">
+        {{ form.username|as_crispy_field }}
+        <i class="bx bxs-user"></i>
+    </div>
+
+    <div class="input-box">
+        {{ form.password|as_crispy_field }}
+        <i class="bx bxs-lock-alt"></i>
+    </div>
+
+    <div class="remember-forgot">
+          <label><input type="checkbox" /> Remember me </label>
+        <a href="#">Forgot password?</a>
+    </div>
+
+    <button type="submit" class="btn">Login</button>
+
+    <div class="register-link">
+        <p>Don't have an account? <a href="#">Register</a></p>
+    </div>
+</form>
+    </div>
+  </body>
+</html>
+
 {% endblock %}
