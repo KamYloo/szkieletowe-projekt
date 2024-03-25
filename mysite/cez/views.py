@@ -1,11 +1,12 @@
-import os
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
+from .models import Assignment, Submission, Course ,Enrollment, Student
 from .models import Assignment, Submission, Topic, File
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
+from .forms import SubmissionForm, CourseForm, AccessKeyForm
 from .forms import SubmissionForm,TopicUpdateForm, AssignmentForm, AssignmentUpdateForm, FileForm
 from django.contrib.auth.decorators import user_passes_test
 from django.forms import modelformset_factory
@@ -14,11 +15,9 @@ from django.forms import modelformset_factory
 def index(request):
     return render(request, "cez/index.html")
 
-def course(request):
-    return render(request, "cez/courses.html")
-
-def create_course(request):
-    return render(request, "cez/create_course_form.html")
+def courses(request):
+    courses = Course.objects.all()
+    return render(request, 'cez/courses.html', {'courses': courses})
 
 # def assignment(request):
 #     return render(request, "cez/assignment.html", {"assignments": Assignment.objects.all()})
@@ -75,6 +74,19 @@ def submit_assignment(request, assignment_id):
         form = SubmissionForm(instance=submission_instance)
     return render(request, 'cez/submit_assignment.html', {'form': form, 'assignment':assignment})
 
+@login_required
+def create_course(request):
+    if request.method == 'POST':
+        form = CourseForm(request.POST, request.FILES)
+        if form.is_valid():
+            course = form.save(commit=False)
+            course.teacher = request.user.profile
+            course.save()
+            return redirect('courses')
+    else:
+        form = CourseForm()
+    return render(request, 'cez/create_course_form.html', {'form': form})
+
 def update_assignment(request, assignment_id):
     try:
         assignment = Assignment.objects.get(pk=assignment_id)
@@ -91,6 +103,27 @@ def update_assignment(request, assignment_id):
         form = AssignmentUpdateForm(instance=assignment)
     return render(request, 'cez/update_assignment.html', {'form': form, 'assignment':assignment})
 
+
+@login_required
+def enroll_to_course(request, course_id):
+    course = Course.objects.get(pk=course_id)
+    try:
+        enrollment = Enrollment.objects.get(student=request.user, course=course)
+    except Enrollment.DoesNotExist:
+        if request.method == 'POST':
+            form = AccessKeyForm(request.POST)
+            if form.is_valid():
+                access_key = form.cleaned_data['access_key']
+                if access_key == course.access_key:
+                    enrollment = Enrollment.objects.create(student=request.user, course=course)
+                    enrollment.save()
+                    return redirect('course_detail', course_id=course.id)
+                else:
+                    form.add_error(None, 'Invalid access key')
+        else:
+            form = AccessKeyForm()
+        return render(request, 'cez/enroll_to_course.html', {'form': form})
+    return redirect('course_detail', course_id=course_id)
 
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def update_topic(request, topic_id):
@@ -134,3 +167,8 @@ def delete_file(request, topic_id, file_id):
     file.delete()
     messages.success(request, "Deleted file")
     return redirect('topic-detail', topic_id)
+
+@login_required
+def course_detail(request, course_id):
+    course = Course.objects.get(pk=course_id)
+    return render(request, 'cez/course_detail.html', {'course': course, 'topics': Course.objects.get(pk=course_id).topics.all()})

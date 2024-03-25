@@ -68,61 +68,15 @@
         </div>
       </div>
       <section class="courses_list">
+        {% for course in courses %}
         <div class="course">
-          <img src="{% static 'images/default_course.jpg' %}" alt="" />
-          <p class="tittle">Inżynieria Oprogramowania</p>
+          <img src="{{course.image.url}}" alt="" />
+          <p class="tittle">{{ course.title }}</p>
           <p class="description">
-            nauka diagramow przypadkow uzycia blablablablablablablabalbal
+            {{course.description}}
           </p>
-          <button class="join_button">Join</button>
+          <a href="{% url 'enroll_to_course' course.id %}" class="join_button" >Join</a>
         </div>
-        <div class="course">
-          <img src="{% static 'images/default_course.jpg' %}" alt="" />
-          <p class="tittle">Inżynieria Oprogramowania</p>
-          <p class="description">
-            nauka diagramow przypadkow uzycia blablablablablablablabalbal
-          </p>
-          <button class="join_button">Join</button>
-        </div>
-        <div class="course">
-          <img src="{% static 'images/default_course.jpg' %}" alt="" />
-          <p class="tittle">Inżynieria Oprogramowania</p>
-          <p class="description">
-            nauka diagramow przypadkow uzycia blablablablablablablabalbal
-          </p>
-          <button class="join_button">Join</button>
-        </div>
-        <div class="course">
-          <img src="{% static 'images/default_course.jpg' %}" alt="" />
-          <p class="tittle">Inżynieria Oprogramowania</p>
-          <p class="description">
-            nauka diagramow przypadkow uzycia blablablablablablablabalbal
-          </p>
-          <button class="join_button">Join</button>
-        </div>
-        <div class="course">
-          <img src="{% static 'images/default_course.jpg' %}" alt="" />
-          <p class="tittle">Inżynieria Oprogramowania</p>
-          <p class="description">
-            nauka diagramow przypadkow uzycia blablablablablablablabalbal
-          </p>
-          <button class="join_button">Join</button>
-        </div>
-        <div class="course">
-          <img src="{% static 'images/default_course.jpg' %}" alt="" />
-          <p class="tittle">Inżynieria Oprogramowania</p>
-          <p class="description">
-            nauka diagramow przypadkow uzycia blablablablablablablabalbal
-          </p>
-          <button class="join_button">Join</button>
-        </div>
-        <div class="course">
-          <img src="{% static 'images/default_course.jpg' %}" alt="" />
-          <p class="tittle">Inżynieria Oprogramowania</p>
-          <p class="description">
-            nauka diagramow przypadkow uzycia blablablablablablablabalbal
-          </p>
-          <button class="join_button">Join</button>
-        </div>
+        {% endfor %}
       </section>
 {% endblock %}

@@ -1,0 +1,12 @@
+{% extends "../base/base.html" %}
+{% load static %}
+{% block content %}
+      <h1>Course Detail</h1>
+    <h2>{{ course.title }}</h2>
+    {% for topic in topics %}
+        <div class="pt-3">
+            <a class="ml-2" href="{% url 'topic-detail' topic.id %}"><h1>{{ topic.title }}</h1></a><br>
+        </div>
+    {% endfor %}
+
+{% endblock %}

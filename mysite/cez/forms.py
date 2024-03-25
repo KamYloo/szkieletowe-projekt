@@ -1,10 +1,22 @@
 from django import forms
+from .models import Submission, Course, Enrollment
 from .models import Submission, Topic, Assignment, File
 
 class SubmissionForm(forms.ModelForm):
     class Meta:
         model = Submission
         fields = ['file']
+
+class CourseForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = ['title', 'description', 'image', 'semester', 'degree', 'access_key']
+
+class AccessKeyForm(forms.ModelForm):
+    class Meta:
+        model = Enrollment
+        fields = ['access_key']
+
 
 class TopicUpdateForm(forms.ModelForm):
     class Meta:

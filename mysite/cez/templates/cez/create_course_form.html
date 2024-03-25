@@ -4,37 +4,9 @@
         <div class="creation">
           <div class="space_form">
             <h1>Create-Course</h1>
-            <form action="#">
-              <div class="form-group">
-                <label for="nazwa_kursu">Nazwa kursu:</label>
-                <input
-                  type="text"
-                  id="nazwa_kursu"
-                  name="nazwa_kursu"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label for="opis">Opis:</label>
-                <textarea id="opis" name="opis" rows="5" required></textarea>
-              </div>
-              <div class="form-group">
-                <label for="haslo">Hasło dostępu:</label>
-                <input type="password" id="haslo" name="haslo" required />
-              </div>
-              <div class="form-group">
-                <label for="zdjecie_kursu">Zdjęcie kursu:</label>
-                <input
-                  type="file"
-                  id="zdjecie_kursu"
-                  name="zdjecie_kursu"
-                  accept="image/*"
-                />
-                <small
-                  >Wybierz plik, aby zastąpić domyślne zdjęcie
-                  (opcjonalne).</small
-                >
-              </div>
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ form.as_p }}
               <div class="form-action">
                 <a class="btn_bbt" href="{% url 'courses' %}"> Cancel </a>
                 <button class="btn_bbt" type="submit"> Submit</button>>

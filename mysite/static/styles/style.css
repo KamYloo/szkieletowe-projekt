@@ -515,3 +515,7 @@ margin-left: 10px;
 .form-action .btn_bbt:hover {
   background-color: transparent;
 }
+
+.pt-3 .ml-2 {
+  color: white;
+}
