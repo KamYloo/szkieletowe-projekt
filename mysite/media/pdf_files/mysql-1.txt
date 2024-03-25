@@ -1,0 +1,34 @@
+-- CREATE TABLE student (
+--     student_id INT PRIMARY KEY,
+--     name VARCHAR(20),
+--     major VARCHAR(20)
+-- );
+
+-- DESCRIBE student;
+
+-- -- DROP TABLE student;
+
+-- -- ALTER TABLE student ADD gpa DECIMAL(3,2);
+
+
+-- -- ALTER TABLE student DROP COLUMN gpa;
+
+-- INSERT INTO student VALUES(2, 'Kate', 'Sociology');
+
+-- SELECT * FROM student;
+
+-- INSERT INTO student(student_id, name) VALUES(4, 'Claire');
+
+DROP TABLE student;
+
+CREATE TABLE student (
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(20) NOT NULL,
+    major VARCHAR(20) DEFAULT 'undecided'
+);
+
+UPDATE student SET major = 'Bio' WHERE major = 'Biology'
+
+-- DELETE FROM student;
+
+DELETE FROM student WHERE student_id = 5;

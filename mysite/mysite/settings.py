@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'users',
+    'django_recaptcha',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +62,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ os.path.join(BASE_DIR, 'templates') ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -142,3 +143,13 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 LOGIN_REDIRECT_URL = 'index'
+
+RECAPTCHA_PRIVATE_KEY = os.getenv('C_PRI_K')
+RECAPTCHA_PUBLIC_KEY = os.getenv('C_PUB_K')
+RECAPTCHA_REQUIRED_SCORE = 0.85
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER =  os.getenv('EMAIL_U')
+EMAIL_HOST_PASSWORD =  os.getenv('EMAIL_P')
+EMAIL_PORT = 587

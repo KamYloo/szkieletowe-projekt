@@ -7,7 +7,13 @@
     <form method="POST">
       {% csrf_token %}
         <fieldset class="form-group">
-            {{form|crispy}}
+            {{form.username|as_crispy_field}}
+            {{form.email|as_crispy_field}}
+            {{form.first_name|as_crispy_field}}
+            {{form.last_name|as_crispy_field}}
+            {{form.password1|as_crispy_field}}
+            {{form.password2|as_crispy_field}}
+            {{form.captcha}}
         </fieldset>
         <div class="form-group">
             <button class="btn btn-outline-info"type="submit">Zarejestruj</button>

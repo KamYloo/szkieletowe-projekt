@@ -8,6 +8,7 @@ class Assignment(models.Model):
     title = models.CharField(max_length=64)
     content = models.CharField(max_length=1024)
     due_date = models.DateTimeField(default=datetime.now() + timedelta(weeks=1))
+    topics = models.ManyToManyField('Topic', blank=True)
 
     def __str__(self):
         return f"{self.title}"
@@ -30,3 +31,18 @@ class Submission(models.Model):
 
     def __str__(self):
         return f"Answer submitted by {self.student} to {self.assignment}"
+
+class Topic(models.Model):
+    title = models.CharField(max_length=64)
+    content = models.CharField(max_length=1024)
+    files = models.ManyToManyField('File',blank=True)
+    assignments = models.ManyToManyField('Assignment',blank=True)
+
+    def __str__(self):
+        return f"{self.title}"
+
+class File(models.Model):
+    file = models.FileField(upload_to='pdf_files/')
+
+    def __str__(self):
+        return f"{self.file.name}"

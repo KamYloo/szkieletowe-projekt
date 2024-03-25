@@ -1,0 +1,16 @@
+{% extends "../base/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Zadanie{% endblock %}
+
+{% block content %}
+    <h1>Create Assignment for "{{ topic.title }}"</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Save Assignment</button>
+    </form>
+{% endblock %}
+
+

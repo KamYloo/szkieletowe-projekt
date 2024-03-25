@@ -29,5 +29,6 @@ urlpatterns = [
     path('update-profile/', user_views.update_profile, name='update-profile'),
     path("logout/", auth_views.LogoutView.as_view(template_name='users/logout.html'), name="logout"),
     path("admin/", admin.site.urls),
+    #path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/', user_views.activate, name='activate'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

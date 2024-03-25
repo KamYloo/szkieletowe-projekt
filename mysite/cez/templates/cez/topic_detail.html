@@ -1,0 +1,25 @@
+{% extends "../base/base.html" %}
+{% load crispy_forms_tags %}
+{% load file_name %}
+{% block title %}Zadanie{% endblock %}
+
+{% block content %}
+    <div class="pt-3">
+        <h1>{{ topic.title }}</h1><br>
+        <h3>{{ topic.content }}</h3><br>
+        {% for file in files %}
+        <a class="ml-2" href="{{ file.file.url }}" target="_blank">{{ file.file.name|filename }}</a>
+        <a class="ml-2" href="{% url 'delete-file' topic.id file.id %}">Delete file</a><br>
+        {% endfor %}
+        <hr>
+        {% for assignment in assignments %}
+        <a class="ml-2" href="{% url 'assignment-submit' assignment.id %}">{{ assignment.title }}</a>
+        <a class="ml-2" href="{% url 'assignment-update' assignment.id %}">Update</a>
+        <br>
+        {% endfor %}
+        <hr>
+        <a class="ml-2" href="{% url 'create-assignments' topic.id %}">Add assignment</a><br>
+        <a class="ml-2" href="{% url 'add-file' topic.id %}">Add file</a><br>
+        <a class="ml-2" href="{% url 'topic-update' topic.id %}">Update topic</a><br>
+    </div>
+{% endblock %}
