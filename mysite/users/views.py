@@ -8,16 +8,20 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+from django.http import HttpResponse
 
 # Create your views here.
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.is_active = False
-            user = form.save(commit=False)
-            # user.is_active = False
-            # user.save()
+            #user = form.save()
+            user = form.save()
+            user.is_active = False
+            user.save()
             # username = form.cleaned_data.get('username')
             current_site = get_current_site(request)
             mail_subject = 'Activation link has been sent to your email id'
@@ -32,7 +36,7 @@ def register(request):
                 mail_subject, message, to=[to_email]
             )
             email.send()
-            messages.success(request, 'Please confirm your email address to complete the registration')
+            #messages.success(request, 'Please confirm your email address to complete the registration')
             return redirect('login')
     else:
         form = UserRegisterForm(request.POST)
@@ -48,9 +52,11 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        #messages.success(request, 'Udało ci się aktywować konto!')
+        return redirect('login')
     else:
-        return HttpResponse('Activation link is invalid!')
+        #messages.error(request, 'Please confirm your email address to complete the registration')
+        return redirect('register')
 
 @login_required
 def profile(request):

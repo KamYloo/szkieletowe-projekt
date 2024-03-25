@@ -3,24 +3,6 @@
 {% block title %}Glowna strona{% endblock %}
 
 {% block content %}
-<<<<<<< HEAD
-    {% if user.is_authenticated %}
-          <h1>Witaj {{user.username}}</h1>
-            <div class="pt-3">
-                <small class="text-muted">
-                    <a class="ml-2" href="{% url 'profile' %}">Profil</a>
-                    <a class="ml-2" href="{% url 'logout' %}">Wyloguj się</a>
-                    <a class="ml-2" href="{% url 'assignment' %}">Zadanie</a>
-                    <a class="ml-2" href="{% url 'topic' %}">Tematy</a>
-                </small>
-            </div>
-        {% else %}
-            <div class="pt-3">
-                <a href="{% url 'login' %}"><h1>Zaloguj sie</h1></a>
-            </div>
-        {% endif %}
-=======
-
       <div class="content">
         <div class="main-text">
           <h6>#1 Online</h6>
@@ -60,5 +42,4 @@
           <img src="{% static 'images/start_background.png' %}" />
         </div>
       </div>
->>>>>>> 93906bae700d77466b4a73349cb92911d055112c
 {% endblock %}
