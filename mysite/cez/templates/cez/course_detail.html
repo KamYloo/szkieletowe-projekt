@@ -26,7 +26,7 @@
             <br>
             {% if user|has_group:"Nauczyciel" %}
                 <a class="ml-2" href="{% url 'create-assignments' course.id topic.id %}">Add assignment</a><br>
-                <a class="ml-2" href="{% url 'add-file' topic.id %}">Add file</a><br>
+                <a class="ml-2" href="{% url 'add-file' course.id  topic.id %}">Add file</a><br>
                 <a class="ml-2" href="{% url 'topic-update' course.id topic.id %}">Update topic</a><br>
             {% endif %}
             <hr>

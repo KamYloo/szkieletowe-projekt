@@ -19,27 +19,7 @@ def courses(request):
     courses = Course.objects.all()
     return render(request, 'cez/courses.html', {'courses': courses})
 
-# def assignment(request):
-#     return render(request, "cez/assignment.html", {"assignments": Assignment.objects.all()})
-
-class AssignmentListView(ListView):
-    model = Assignment
-    template_name = "cez/assignment.html"
-    context_object_name = "assignments"
-
-# class TopicListView(ListView):
-#     model = Topic
-#     template_name = "cez/topic.html"
-#     context_object_name = "topics"
-
-# def view_topic(request, topic_id):
-#     try:
-#         topic = Topic.objects.get(pk=topic_id)
-#     except Topic.DoesNotExist:
-#         messages.error(request, 'Topic does not exist')
-#         return redirect('topic')
-#     return render(request, "cez/topic_detail.html", {"topic":topic, "files": topic.files.all(), "assignments": topic.assignments.all()})
-
+@user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def create_assignments(request, course_id, topic_id):
     topic = Topic.objects.get(pk=topic_id)
     if request.method == 'POST':
@@ -55,6 +35,7 @@ def create_assignments(request, course_id, topic_id):
         form = AssignmentForm()
     return render(request, 'cez/create_assignment.html', {'form': form, 'topic': topic})
 
+@login_required
 def submit_assignment(request, assignment_id):
     try:
         assignment = Assignment.objects.get(pk=assignment_id)
@@ -87,6 +68,7 @@ def create_course(request):
         form = CourseForm()
     return render(request, 'cez/create_course_form.html', {'form': form})
 
+@user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def update_assignment(request, course_id, assignment_id):
     try:
         assignment = Assignment.objects.get(pk=assignment_id)
@@ -103,6 +85,7 @@ def update_assignment(request, course_id, assignment_id):
         form = AssignmentUpdateForm(instance=assignment)
     return render(request, 'cez/update_assignment.html', {'form': form, 'assignment':assignment})
 
+@user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def remove_assignment(request, course_id, assignment_id):
     assignment = Assignment.objects.get(pk=assignment_id)
     assignment.delete()
@@ -147,7 +130,8 @@ def update_topic(request, course_id, topic_id):
         form = TopicUpdateForm(instance=topic)
     return render(request, 'cez/topic_update.html', {'form': form}) # , 'topic': topic
 
-def add_file(request, topic_id):
+@user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
+def add_file(request, course_id, topic_id):
     try:
         topic = Topic.objects.get(pk=topic_id)
     except Topic.DoesNotExist:
@@ -160,11 +144,12 @@ def add_file(request, topic_id):
             topic.files.add(file)
             topic.save()
             messages.success(request, 'File added')
-            return redirect('topic-detail', topic_id)
+            return redirect('course_detail', course_id)
     else:
         form = FileForm()
     return render(request, 'cez/add_file.html', {'form': form})
 
+@user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def delete_file(request, course_id, file_id):
     file = File.objects.get(pk=file_id)
     file.file.delete()
