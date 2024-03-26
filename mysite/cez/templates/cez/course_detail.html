@@ -16,10 +16,14 @@
             {% endfor %}
             <br>
             {% for assignment in topic.assignments.all %}
-                <a class="ml-2" href="{% url 'assignment-submit' assignment.id %}">{{ assignment.title }}</a>
                 {% if user|has_group:"Nauczyciel" %}
-                    <a class="ml-2" href="{% url 'assignment-update' course.id assignment.id %}">Update</a>
-                    <a class="ml-2" href="{% url 'assignment-remove' course.id assignment.id %}">Remove</a>
+                <a class="ml-2" href="{% url 'assignment-rate' course.id assignment.id %}">{{ assignment.title }}</a>
+                {% else %}
+                <a class="ml-2" href="{% url 'assignment-submit' assignment.id %}">{{ assignment.title }}</a>
+                {% endif %}
+                {% if user|has_group:"Nauczyciel" %}
+                <a class="ml-2" href="{% url 'assignment-update' course.id assignment.id %}">Update</a>
+                <a class="ml-2" href="{% url 'assignment-remove' course.id assignment.id %}">Remove</a><br>
                 {% endif %}
                 <br>
             {% endfor %}

@@ -11,5 +11,9 @@
           {{ form.as_p }}
           <button type="submit">Submit</button>
         </form>
+        {% if grade.grade %}
+        <h2>Ocena: {{grade.grade}}</h2>
+        <h2>Komentarz: {{grade.comment}}</h2>
+        {% endif %}
     </div>
 {% endblock %}

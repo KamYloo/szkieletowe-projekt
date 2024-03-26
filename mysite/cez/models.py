@@ -49,6 +49,12 @@ class Submission(models.Model):
     def __str__(self):
         return f"Answer submitted by {self.student} to {self.assignment}"
 
+class RateSubmission(models.Model):
+    submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    grade = models.FloatField(default=0)
+    comment = models.CharField(max_length=1024)
+
 
 class Semester(models.Model):
     semester = models.CharField(max_length=50)

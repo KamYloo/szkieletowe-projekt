@@ -8,6 +8,10 @@ register = template.Library()
 def filename(value):
     return os.path.basename(value)
 
+@register.filter
+def filepath(value):
+    return str(value).split("media")[1].replace("\\","//")
+
 @register.filter(name='has_group')
 def has_group(user, group_name):
     group = Group.objects.get(name=group_name)

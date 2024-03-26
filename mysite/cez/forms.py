@@ -1,6 +1,5 @@
 from django import forms
-from .models import Submission, Course, Enrollment
-from .models import Submission, Topic, Assignment, File
+from .models import Submission, Topic, Assignment, File, Course, Enrollment, RateSubmission
 
 class SubmissionForm(forms.ModelForm):
     class Meta:
@@ -37,3 +36,8 @@ class FileForm(forms.ModelForm):
     class Meta:
         model = File
         fields = ['file']
+
+class RateSubmissionForm(forms.ModelForm):
+    class Meta:
+        model = RateSubmission
+        fields = ['grade', 'comment']

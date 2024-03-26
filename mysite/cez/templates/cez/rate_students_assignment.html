@@ -1,0 +1,18 @@
+{% extends "../base/base.html" %}
+{% load static %}
+{% load file_name %}
+{% block content %}
+        <div class="pt-3">
+            <h1>Rozwiązanie {{ submission.student }}</h1>
+            {% if submission.file %}
+            <a class="ml-2" href="{{ submission.file.url }}">Rozwiazanie</a> <br>
+            {% else %}
+            <h3>Brak przesłanego pliku.</h3>
+            {% endif %}
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit">Submit</button>
+            </form>
+        </div>
+{% endblock %}

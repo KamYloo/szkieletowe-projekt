@@ -1,13 +1,13 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from .models import Assignment, Submission, Course ,Enrollment, Student
-from .models import Assignment, Submission, Topic, File
+from .models import Assignment, Submission, Topic, File, RateSubmission
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from .forms import SubmissionForm, CourseForm, AccessKeyForm
-from .forms import SubmissionForm,TopicUpdateForm, AssignmentForm, AssignmentUpdateForm, FileForm
+from .forms import SubmissionForm,TopicUpdateForm, AssignmentForm, AssignmentUpdateForm, FileForm, RateSubmissionForm
 from django.contrib.auth.decorators import user_passes_test
 from django.forms import modelformset_factory
 from django.db.models import Q
@@ -58,7 +58,8 @@ def submit_assignment(request, assignment_id):
             return redirect('assignment-submit', assignment_id)
     else:
         form = SubmissionForm(instance=submission_instance)
-    return render(request, 'cez/submit_assignment.html', {'form': form, 'assignment':assignment})
+        grade = RateSubmission.objects.filter(submission_id = submission_instance.id).first()
+    return render(request, 'cez/submit_assignment.html', {'form': form, 'assignment':assignment, 'grade': grade})
 
 @login_required
 def create_course(request):
@@ -167,3 +168,59 @@ def course_detail(request, course_id):
     course = Course.objects.get(pk=course_id)
     topics = Course.objects.get(pk=course_id).topics.all()
     return render(request, 'cez/course_detail.html', {'course': course, 'topics': topics, 'user': request.user})
+
+@user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
+def rate_assignment(request, course_id, assignment_id):
+    assignment = Assignment.objects.get(pk=assignment_id)
+    submissions = Submission.objects.filter(assignment_id=assignment_id)
+    return render(request, 'cez/rate_assignment.html', {'assignment': assignment,'submissions': submissions, 'course_id': course_id})
+
+# @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
+# def rate_users_assignment(request, course_id, assignment_id, submission_id):
+#     submission = get_object_or_404(Submission, pk=submission_id)
+#
+#     try:
+#         existing_rating = RateSubmission.objects.get(submission=submission, teacher=request.user.profile)
+#     except RateSubmission.DoesNotExist:
+#         existing_rating = None
+#
+#     if request.method == 'POST':
+#         form = RateSubmissionForm(request.POST, instance=existing_rating)
+#         if form.is_valid():
+#             form.instance.teacher = request.user.profile
+#             form.instance.submission = submission
+#             form.save()
+#             return redirect('assignment-rate', course_id=course_id, assignment_id=assignment_id)
+#     else:
+#         form = RateSubmissionForm(instance=existing_rating)
+#     return render(request, 'cez/rate_students_assignment.html', {'form': form, 'submission': submission})
+
+from django.shortcuts import get_object_or_404, redirect, render
+from .forms import RateSubmissionForm
+from .models import Submission, RateSubmission
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
+def rate_users_assignment(request, course_id, assignment_id, submission_id):
+    submission = get_object_or_404(Submission, pk=submission_id)
+
+    try:
+        existing_rating = RateSubmission.objects.get(submission=submission, teacher=request.user.profile)
+    except RateSubmission.DoesNotExist:
+        existing_rating = None
+
+    if request.method == 'POST':
+        if existing_rating:
+            form = RateSubmissionForm(request.POST, instance=existing_rating)
+        else:
+            form = RateSubmissionForm(request.POST)
+
+        if form.is_valid():
+            form.instance.teacher = request.user.profile
+            form.instance.submission = submission
+            form.save()
+            return redirect('assignment-rate', course_id=course_id, assignment_id=assignment_id)
+    else:
+        form = RateSubmissionForm(instance=existing_rating)
+
+    return render(request, 'cez/rate_students_assignment.html', {'form': form, 'submission': submission})
