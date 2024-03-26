@@ -11,65 +11,85 @@
         <h1>Select Course</h1>
         <form class="search_course" method="GET" action="#">
           <label>
-            <input name="q" placeholder="Search course" value="{% if query != None %}{{ query }}{% endif %}"/>
+            <input name="title" placeholder="Search course" value="{% if title != None %}{{ title }}{% endif %}"/>
             <ion-icon class="fa-solid fa-magnifying-glass" ></ion-icon>
           </label>
+
+          <select name="degree_id">
+            <option value="" selected disabled hidden>Stopień</option>
+            <option value="1">Stopień 1</option>
+            <option value="2">Stopień 2</option>
+            <option value="3">Stopień 3</option>
+            <option value="4">Studia Podyplomowe</option>
+            <option value="5">Przedmioty Obieralne</option>
+          </select>
+
+          <select name="semester_id">
+            <option value="" selected disabled hidden>Semestr</option>
+            <option value="1">Semestr 1</option>
+            <option value="2">Semestr 2</option>
+            <option value="3">Semestr 3</option>
+            <option value="4">Semestr 4</option>
+            <option value="5">Semestr 5</option>
+            <option value="6">Semestr 6</option>
+            <option value="7">Semestr 7</option>
+          </select>
         </form>
-        <div class="filters">
-          <div class="select_filter">
-            <div class="select-btn" id="select-btn1">
-              <span id="text text1">Stopień</span>
-              <ion-icon class="fa-solid fa-caret-down"></ion-icon>
-            </div>
-            <ul class="list">
-              <li class="option option1" style="--i: 7">
-                <span class="option-text">1 Stopień</span>
-              </li>
-              <li class="option option1" style="--i: 6">
-                <span class="option-text">2 Stopień</span>
-              </li>
-              <li class="option option1" style="--i: 5">
-                <span class="option-text">3 Stopień</span>
-              </li>
-              <li class="option option1" style="--i: 4">
-                <span class="option-text">Przedmioty Obierlane</span>
-              </li>
-              <li class="option option1" style="--i: 3">
-                <span class="option-text">Seminaria Dyplomowe</span>
-              </li>
-            </ul>
-          </div>
-          <div class="select_filter">
-            <div class="select-btn" id="select-btn2">
-              <span id="text text2">Semestr</span>
-              <ion-icon class="fa-solid fa-caret-down"></ion-icon>
-            </div>
-            <ul class="list">
-              <li class="option option2" style="--i: 7">
-                <span class="option-text">Semestr 1</span>
-              </li>
-              <li class="option option2" style="--i: 6">
-                <span class="option-text">Semestr 2</span>
-              </li>
-              <li class="option option2" style="--i: 5">
-                <span class="option-text">Semestr 3</span>
-              </li>
-              <li class="option option2" style="--i: 4">
-                <span class="option-text">Semestr 4</span>
-              </li>
-              <li class="option option2" style="--i: 3">
-                <span class="option-text">Semestr 5</span>
-              </li>
-              <li class="option option2" style="--i: 2">
-                <span class="option-text">Semestr 6</span>
-              </li>
-              <li class="option option2" style="--i: 1">
-                <span class="option-text">Semestr 7</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+<!--        <div class="filters">-->
+<!--          <div class="select_filter">-->
+<!--            <div class="select-btn" id="select-btn1">-->
+<!--              <span id="text text1">Stopień</span>-->
+<!--              <ion-icon class="fa-solid fa-caret-down"></ion-icon>-->
+<!--            </div>-->
+<!--            <ul class="list">-->
+<!--              <li class="option option1" style="&#45;&#45;i: 7">-->
+<!--                <span class="option-text">1 Stopień</span>-->
+<!--              </li>-->
+<!--              <li class="option option1" style="&#45;&#45;i: 6">-->
+<!--                <span class="option-text">2 Stopień</span>-->
+<!--              </li>-->
+<!--              <li class="option option1" style="&#45;&#45;i: 5">-->
+<!--                <span class="option-text">3 Stopień</span>-->
+<!--              </li>-->
+<!--              <li class="option option1" style="&#45;&#45;i: 4">-->
+<!--                <span class="option-text">Przedmioty Obierlane</span>-->
+<!--              </li>-->
+<!--              <li class="option option1" style="&#45;&#45;i: 3">-->
+<!--                <span class="option-text">Seminaria Dyplomowe</span>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--          <div class="select_filter">-->
+<!--            <div class="select-btn" id="select-btn2">-->
+<!--              <span id="text text2">Semestr</span>-->
+<!--              <ion-icon class="fa-solid fa-caret-down"></ion-icon>-->
+<!--            </div>-->
+<!--            <ul class="list">-->
+<!--              <li class="option option2" style="&#45;&#45;i: 7">-->
+<!--                <span class="option-text">Semestr 1</span>-->
+<!--              </li>-->
+<!--              <li class="option option2" style="&#45;&#45;i: 6">-->
+<!--                <span class="option-text">Semestr 2</span>-->
+<!--              </li>-->
+<!--              <li class="option option2" style="&#45;&#45;i: 5">-->
+<!--                <span class="option-text">Semestr 3</span>-->
+<!--              </li>-->
+<!--              <li class="option option2" style="&#45;&#45;i: 4">-->
+<!--                <span class="option-text">Semestr 4</span>-->
+<!--              </li>-->
+<!--              <li class="option option2" style="&#45;&#45;i: 3">-->
+<!--                <span class="option-text">Semestr 5</span>-->
+<!--              </li>-->
+<!--              <li class="option option2" style="&#45;&#45;i: 2">-->
+<!--                <span class="option-text">Semestr 6</span>-->
+<!--              </li>-->
+<!--              <li class="option option2" style="&#45;&#45;i: 1">-->
+<!--                <span class="option-text">Semestr 7</span>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
       <section class="courses_list">
         {% for course in courses %}
         <div class="course">
@@ -82,4 +102,5 @@
         </div>
         {% endfor %}
       </section>
+</div>
 {% endblock %}
