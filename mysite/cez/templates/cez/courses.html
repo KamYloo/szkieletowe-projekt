@@ -2,7 +2,7 @@
 {% load static %}
 {% load file_name %}
 {% block content %}
-      <div class="courses_layout">
+<div class="courses_layout" xmlns="http://www.w3.org/1999/html">
         <div class="create_course_button">
           {% if request.user|has_group:"Nauczyciel" %}
           <a href="{% url 'create-course' %}">Create new Course</a>
@@ -11,8 +11,8 @@
         <h1>Select Course</h1>
         <form class="search_course" method="GET" action="#">
           <label>
-            <input name="#" placeholder="Search course" />
-            <ion-icon class="fa-solid fa-magnifying-glass"></ion-icon>
+            <input name="q" placeholder="Search course" value="{% if query != None %}{{ query }}{% endif %}"/>
+            <ion-icon class="fa-solid fa-magnifying-glass" ></ion-icon>
           </label>
         </form>
         <div class="filters">

@@ -10,14 +10,19 @@ from .forms import SubmissionForm, CourseForm, AccessKeyForm
 from .forms import SubmissionForm,TopicUpdateForm, AssignmentForm, AssignmentUpdateForm, FileForm
 from django.contrib.auth.decorators import user_passes_test
 from django.forms import modelformset_factory
+from django.db.models import Q
 # Create your views here.
 
 def index(request):
     return render(request, "cez/index.html")
 
 def courses(request):
-    courses = Course.objects.all()
-    return render(request, 'cez/courses.html', {'courses': courses})
+    query = request.GET.get("q")
+    if query == '' or query == None:
+        courses = Course.objects.all()
+    else:
+        courses = Course.objects.filter(Q(title__icontains=query))
+    return render(request, 'cez/courses.html', {'courses': courses, 'query': query})
 
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def create_assignments(request, course_id, topic_id):
