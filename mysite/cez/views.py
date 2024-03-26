@@ -17,12 +17,22 @@ def index(request):
     return render(request, "cez/index.html")
 
 def courses(request):
-    query = request.GET.get("q")
-    if query == '' or query == None:
+    title = request.GET.get("title")
+    degree_id = request.GET.get("degree_id")
+    semester_id = request.GET.get("semester_id")
+    if (title == '' or title == None) and degree_id == None and semester_id == None :
         courses = Course.objects.all()
     else:
-        courses = Course.objects.filter(Q(title__icontains=query))
-    return render(request, 'cez/courses.html', {'courses': courses, 'query': query})
+        query = Q()
+        if title != '' and title != None:
+            query &= Q(title__icontains=title)
+        if degree_id != None:
+            query &= Q(degree_id=degree_id)
+        if semester_id != None:
+            query &= Q(semester_id=semester_id)
+        courses = Course.objects.filter(query)
+
+    return render(request, 'cez/courses.html', {'courses': courses, 'title': title})
 
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def create_assignments(request, course_id, topic_id):
