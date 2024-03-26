@@ -1,12 +1,35 @@
 {% extends "../base/base.html" %}
 {% load static %}
+{% load file_name %}
 {% block content %}
-      <h1>Course Detail</h1>
+    <h1>Course Detail</h1>
     <h2>{{ course.title }}</h2>
     {% for topic in topics %}
         <div class="pt-3">
-            <a class="ml-2" href="{% url 'topic-detail' topic.id %}"><h1>{{ topic.title }}</h1></a><br>
+            <h1>{{ topic.title }}</h1><br>
+            <h3>{{ topic.content }}</h3><br>
+            {% for file in topic.files.all %}
+                <a class="ml-2" href="{{ file.file.url }}" target="_blank">{{ file.file.name|filename }}</a>
+                {% if user|has_group:"Nauczyciel" %}
+                    <a class="ml-2" href="{% url 'delete-file' course.id file.id %}">Delete file</a><br>
+                {% endif %}
+            {% endfor %}
+            <br>
+            {% for assignment in topic.assignments.all %}
+                <a class="ml-2" href="{% url 'assignment-submit' assignment.id %}">{{ assignment.title }}</a>
+                {% if user|has_group:"Nauczyciel" %}
+                    <a class="ml-2" href="{% url 'assignment-update' course.id assignment.id %}">Update</a>
+                    <a class="ml-2" href="{% url 'assignment-remove' course.id assignment.id %}">Remove</a>
+                {% endif %}
+                <br>
+            {% endfor %}
+            <br>
+            {% if user|has_group:"Nauczyciel" %}
+                <a class="ml-2" href="{% url 'create-assignments' course.id topic.id %}">Add assignment</a><br>
+                <a class="ml-2" href="{% url 'add-file' topic.id %}">Add file</a><br>
+                <a class="ml-2" href="{% url 'topic-update' course.id topic.id %}">Update topic</a><br>
+            {% endif %}
+            <hr>
         </div>
     {% endfor %}
-
 {% endblock %}

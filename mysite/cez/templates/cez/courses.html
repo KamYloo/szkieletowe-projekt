@@ -1,9 +1,12 @@
 {% extends "../base/base.html" %}
 {% load static %}
+{% load file_name %}
 {% block content %}
       <div class="courses_layout">
         <div class="create_course_button">
+          {% if request.user|has_group:"Nauczyciel" %}
           <a href="{% url 'create-course' %}">Create new Course</a>
+          {% endif %}
         </div>
         <h1>Select Course</h1>
         <form class="search_course" method="GET" action="#">
