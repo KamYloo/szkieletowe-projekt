@@ -1,9 +1,15 @@
+const menu_button = document.getElementById("select_menu")
 const selectBtn1 = document.getElementById('select-btn1');
 const selectBtn2 = document.getElementById('select-btn2');
 const text1 = document.getElementById('text text1');
 const text2 = document.getElementById('text text2');
 const option1 = document.getElementsByClassName('option option1');
 const option2 = document.getElementsByClassName('option option2');
+
+
+menu_button.addEventListener('click', function() {
+    menu_button.classList.toggle('active');
+})
 
 selectBtn1.addEventListener('click', function() {
     selectBtn1.classList.toggle('active');

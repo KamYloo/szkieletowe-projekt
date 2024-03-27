@@ -1,31 +1,41 @@
 {% load static %}
 
     <header>
-        <div class="logo">
-          <h2><a href="{% url 'index' %}">SkillForge</a></h2>
-        </div>
+            <div class="logo">
+                <img src="{% static 'images/logo.png' %}" alt="">
+                <h2><a href="{% url 'index' %}">SkillForge</a></h2>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active"><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'courses' %}">Courses</a></li>
+                    <li><a href="#">Chat</a></li>
+                    <li><a href="#">Help</a></li>
 
-        <nav>
-          <ul>
-            <li class="active"><a href="{% url 'index' %}">Home</a></li>
-            <li><a href="{% url 'courses' %}">Courses</a></li>
-            <li><a href="#">Chat</a></li>
-            <li><a href="#">Help</a></li>
-              {% if request.user.is_authenticated %}
-              <li class="btn">
-                  <div class="user_header">
-                      <img src="{% static 'images/guest-user.webp' %}" />
-                      <p>{{user.username}}</p>
-                  </div>
-                <a href="{% url 'logout' %}">Wyloguj</a></li>
-              {% else %}
-            <li class="btn">
-                <div class="user_header">
-                      <img src="{% static 'images/guest-user.webp' %}" />
-                      <p>nick</p>
-                  </div>
-                <a href="{% url 'login' %}">Login</a></li>
-               {% endif %}
-          </ul>
-        </nav>
-      </header>
+                </ul>
+            </nav>
+             {% if request.user.is_authenticated %}
+            <div class="user_data">
+              <img src="{% static 'images/guest-user.webp' %}" alt="">
+              <div class="user_data_name">
+                <h2>{{user.username}}</h2>
+                <p>rola</p>
+              </div>
+              <div class="menu">
+                <svg  id="select_menu" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                </svg>
+                <ul class="menu_list">
+                  <li class="option_menu" style="--i:2;">
+                      <a href="{% url 'profile' %}" class="option-text">Profil</a>
+                  </li>
+                  <li class="option_menu" style="--i:1;">
+                      <a href="{% url 'logout' %}" class="option-text">Logout</a>
+                  </li>
+              </ul>
+              </div>
+              </div>
+         {% else %}
+        <li class="btn"><a href="{% url 'login' %}">Login</a></li>
+           {% endif %}
+        </header>
