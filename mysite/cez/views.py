@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from .forms import SubmissionForm, CourseForm, AccessKeyForm
-from .forms import SubmissionForm,TopicUpdateForm, AssignmentForm, AssignmentUpdateForm, FileForm, RateSubmissionForm
+from .forms import SubmissionForm,TopicUpdateForm, AssignmentForm, AssignmentUpdateForm, FileForm, RateSubmissionForm, TopicForm
 from django.contrib.auth.decorators import user_passes_test
 from django.forms import modelformset_factory
 from django.db.models import Q
@@ -209,3 +209,22 @@ def rate_users_assignment(request, course_id, assignment_id, submission_id):
         form = RateSubmissionForm(instance=existing_rating)
 
     return render(request, 'cez/rate_students_assignment.html', {'form': form, 'submission': submission})
+
+@user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
+def add_topic(request, course_id):
+    course = Course.objects.get(pk=course_id)
+    if request.method == 'POST':
+        form = TopicForm(request.POST)
+        if form.is_valid():
+            topic = form.save()
+            topic.save()
+            course.topics.add(topic)
+            messages.success(request, 'Topic added')
+            return redirect('course_detail', course_id)
+    else:
+        form = TopicForm()
+    return render(request, 'cez/add_topic.html', {'form': form})
+
+def course_participants(request, course_id):
+    participants = Enrollment.objects.filter(course_id=course_id)
+    return render(request, 'cez/course_participants.html', {'participants': participants})

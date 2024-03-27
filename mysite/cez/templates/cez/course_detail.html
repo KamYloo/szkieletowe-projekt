@@ -2,8 +2,8 @@
 {% load static %}
 {% load file_name %}
 {% block content %}
-    <h1>Course Detail</h1>
-    <h2>{{ course.title }}</h2>
+    <h1>{{ course.title }}</h1>
+    <hr>
     {% for topic in topics %}
         <div class="pt-3">
             <h1>{{ topic.title }}</h1><br>
@@ -11,7 +11,7 @@
             {% for file in topic.files.all %}
                 <a class="ml-2" href="{{ file.file.url }}" target="_blank">{{ file.file.name|filename }}</a>
                 {% if user|has_group:"Nauczyciel" %}
-                    <a class="ml-2" href="{% url 'delete-file' course.id file.id %}">Delete file</a><br>
+                    <a class="ml-2" href="{% url 'delete-file' course.id file.id %}"><button style="background-color: #f55151">Delete file</button></a><br>
                 {% endif %}
             {% endfor %}
             <br>
@@ -22,18 +22,22 @@
                 <a class="ml-2" href="{% url 'assignment-submit' assignment.id %}">{{ assignment.title }}</a>
                 {% endif %}
                 {% if user|has_group:"Nauczyciel" %}
-                <a class="ml-2" href="{% url 'assignment-update' course.id assignment.id %}">Update</a>
-                <a class="ml-2" href="{% url 'assignment-remove' course.id assignment.id %}">Remove</a><br>
+                <a class="ml-2" href="{% url 'assignment-update' course.id assignment.id %}"><button  style="background-color: #06b473">Update</button></a>
+                <a class="ml-2" href="{% url 'assignment-remove' course.id assignment.id %}"><button style="background-color: #f55151">Remove</button></a><br>
                 {% endif %}
                 <br>
             {% endfor %}
             <br>
             {% if user|has_group:"Nauczyciel" %}
-                <a class="ml-2" href="{% url 'create-assignments' course.id topic.id %}">Add assignment</a><br>
-                <a class="ml-2" href="{% url 'add-file' course.id  topic.id %}">Add file</a><br>
-                <a class="ml-2" href="{% url 'topic-update' course.id topic.id %}">Update topic</a><br>
+                <a class="ml-2" href="{% url 'create-assignments' course.id topic.id %}"><button >Add assignment</button></a><br>
+                <a class="ml-2" href="{% url 'add-file' course.id  topic.id %}"><button>Add file</button></a><br>
+                <a class="ml-2" href="{% url 'topic-update' course.id topic.id %}"><button>Update topic</button></a><br>
             {% endif %}
             <hr>
         </div>
     {% endfor %}
-{% endblock %}
+        <br>
+        <br>
+        <a class="ml-2" href="{% url 'add-topic' course.id  %}"><button>Add topic</button></a><br>
+        <a class="ml-2" href="{% url 'course_participants' course.id %}"><button>Course participants</button></a><br>
+    {% endblock %}

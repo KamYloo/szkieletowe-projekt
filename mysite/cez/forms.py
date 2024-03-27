@@ -41,3 +41,8 @@ class RateSubmissionForm(forms.ModelForm):
     class Meta:
         model = RateSubmission
         fields = ['grade', 'comment']
+
+class TopicForm(forms.ModelForm):
+    class Meta:
+        model = Topic
+        fields = ['title','content']
