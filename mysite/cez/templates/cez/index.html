@@ -21,25 +21,19 @@
           </p>
           <a href="{% url 'courses' %}">Go Learn</a>
         </div>
-        <div class="social">
-          <a href="#" class="btn">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="#" class="btn">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="#" class="btn">
-            <i class="fab fa-google"></i>
-          </a>
-          <a href="#" class="btn">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="#" class="btn">
-            <i class="fab fa-youtube"></i>
-          </a>
-        </div>
-        <div class="image">
-          <img src="" />
-        </div>
       </div>
+      <section class="slide_container">
+        <div class="slider_wrapper">
+          <div class="slider">
+            <img id="slide_1" src="{% static 'images/slide1.png' %}" alt="">
+            <img id="slide_2" src="{% static 'images/slide2.png' %}" alt="">
+            <img id="slide_3" src="{% static 'images/slide3.png' %}" alt="">
+          </div>
+          <div class="slider_nav">
+            <a href="#slide_1"></a>
+            <a href="#slide_2"></a>
+            <a href="#slide_3"></a>
+          </div>
+        </div>
+      </section>
 {% endblock %}

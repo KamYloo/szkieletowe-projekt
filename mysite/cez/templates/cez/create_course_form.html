@@ -1,18 +1,22 @@
 {% extends "../base/base.html" %}
 {% block content %}
-      <section class="room_form">
-        <div class="creation">
-          <div class="space_form">
-            <h1>Create-Course</h1>
-            <form method="post" enctype="multipart/form-data">
-              {% csrf_token %}
-              {{ form.as_p }}
-              <div class="form-action">
-                <a class="btn_bbt" href="{% url 'courses' %}"> Cancel </a>
-                <button class="btn_bbt" type="submit"> Submit</button>>
-              </div>
-            </form>
+<section class="cr_1">
+        <div class="cr_2">
+          <div class="cr_3">
+            <h2>Create-Course"</h2>
           </div>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+          <div class="cr_3_action">
+            <button type="button" class="btn_cancel">
+              <a href="{{request.META.HTTP_REFERER}}" >Cancel</a>
+            </button>
+            <button type="submit" class="btn_submit">
+              Submit
+            </button>
+          </div>
+            </form>
         </div>
-      </section>
+</section>
 {% endblock %}

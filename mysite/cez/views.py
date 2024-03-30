@@ -14,7 +14,10 @@ from django.db.models import Q
 # Create your views here.
 
 def index(request):
-    return render(request, "cez/index.html")
+    context = {
+        'is_homepage': True
+    }
+    return render(request, 'cez/index.html', context)
 
 def courses(request):
     title = request.GET.get("title")

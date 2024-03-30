@@ -2,11 +2,30 @@
 {% load static %}
 {% load file_name %}
 {% block content %}
-        <div class="pt-3">
-            <h1>{{ assignment.title }}</h1>
-            <h3>{{ assignment.content }}</h3>
+<section class="cr_1">
+        <div class="cr_2">
+          <div class="cr_3">
+            <h2>Oceń Rozwiązanie</h2>
+          </div>
+            <h3>{{ assignment.title }}<br> <br> Content:</h3>
+            <p class="cr_2_p" >{{ assignment.content }}</p>
+          <div class="cr_3">
+            <h8>Nadesłane Prace</h8>
+          </div>
+          <ul class="list_to_mark">
             {% for submission in submissions %}
-            <a class="ml-2" href="{% url 'assignment-rate-by-user' course_id assignment.id submission.id %}">{{ submission.student }}</a> <br>
+            <li class="option_to_mark">
+              <i class="fa-solid fa-angles-right"></i>
+              <a class="pp_mark" href="{% url 'assignment-rate-by-user' course_id assignment.id submission.id %}">{{ submission.student }}</a>
+            </li>
             {% endfor %}
+          </ul>
+          <div class="cr_3_action">
+            <button type="button" class="btn_cancel">
+              <a href="{{request.META.HTTP_REFERER}}" >Cancel</a>
+            </button>
+          </div>
         </div>
+</section>
+
 {% endblock %}

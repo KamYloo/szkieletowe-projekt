@@ -3,11 +3,6 @@
 {% load file_name %}
 {% block content %}
 <div class="courses_layout" xmlns="http://www.w3.org/1999/html">
-        <div class="create_course_button">
-          {% if request.user|has_group:"Nauczyciel" %}
-          <a href="{% url 'create-course' %}">Create new Course</a>
-          {% endif %}
-        </div>
         <h1>Select Course</h1>
         <form class="search_course" method="GET" action="#">
           <label>
@@ -90,6 +85,11 @@
 <!--          </div>-->
 <!--        </div>-->
 <!--      </div>-->
+    {% if request.user|has_group:"Nauczyciel" %}
+   <div class="create_course_button">
+          <a href="{% url 'create-course' %}">Create new Course</a>
+        </div>
+     {% endif %}
       <section class="courses_list">
         {% for course in courses %}
         <div class="course">

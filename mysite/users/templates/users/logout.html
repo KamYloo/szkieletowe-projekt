@@ -3,12 +3,16 @@
 {% block title %}Glowna strona{% endblock %}
 
 {% block content %}
-    <div class="container">
-    <h3 class="white-important">Zostałeś wylogowany</h3>
-        <div class="pt-3">
-            <small class="text-muted">
-                <a class="ml-2" href="{% url 'login' %}">Zaloguj się ponownie!</a>
-            </small>
+<section class="cr_1">
+        <div class="cr_2">
+          <div class="cr_3">
+            <h2>Zostałeś wylogowany</h2>
+          </div>
+          <div class="cr_3_action">
+            <button type="button" class="btn_cancel">
+              <a href="{% url 'login' %}">Zaloguj się ponownie!</a>
+            </button>
+          </div>
         </div>
-    </div>
+</section>
 {% endblock %}

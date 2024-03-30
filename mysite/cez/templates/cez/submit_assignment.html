@@ -3,17 +3,38 @@
 {% block title %}Submit assignment{% endblock %}
 
 {% block content %}
-    <div class="pt-3">
-        <h1>{{ assignment.title }}</h1><br>
-        <h3>{{ assignment.content }}</h3>
-        <form method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <button type="submit">Submit</button>
-        </form>
-        {% if grade.grade %}
-        <h2>Ocena: {{grade.grade}}</h2>
-        <h2>Komentarz: {{grade.comment}}</h2>
-        {% endif %}
-    </div>
+<section class="cr_1">
+        <div class="cr_2">
+          <div class="cr_3">
+            <h2>{{ assignment.title }}</h2>
+          </div>
+            <h6>Content:</h6>
+            <p class="cr_2_p">{{ assignment.content }}</p>
+
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="file-upload" class="custom_file_upload">Wybierz plik: <span id="file-name-placeholder">Brak wybranego pliku</span></label>
+              <input id="file-upload" type="file" name="file" class="input_file" onchange="updateFileName(this)">
+          <div class="cr_3_action">
+            <button type="button" class="btn_cancel">
+              <a href="{{request.META.HTTP_REFERER}}" >Cancel</a>
+            </button>
+            <button type="submit" class="btn_submit">
+              Submit
+            </button>
+          </div>
+            </form>
+        </div>
+</section>
+{% if grade.grade %}
+<div class="cr_5">
+     <div class="cr_6">
+         <div class="cr_7">
+                 <h2>Ocena: {{grade.grade}} pkt</h2>
+         </div>
+         <h5>Komentarz:</h5>
+         <p>{{grade.comment}}</p>
+     </div>
+</div>
+{% endif %}
 {% endblock %}

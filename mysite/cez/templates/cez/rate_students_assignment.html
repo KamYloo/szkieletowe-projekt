@@ -2,17 +2,31 @@
 {% load static %}
 {% load file_name %}
 {% block content %}
-        <div class="pt-3">
-            <h1>Rozwiązanie {{ submission.student }}</h1>
+<section class="cr_1">
+        <div class="cr_2">
+          <div class="cr_3">
+            <h2>Oceń <br> {{ submission.student }}</h2>
+          </div>
             {% if submission.file %}
-            <a class="ml-2" href="{{ submission.file.url }}">Rozwiazanie</a> <br>
+            <div class="cr2_link">
+              <i class="fa-solid fa-download"></i>
+                <a href="{{ submission.file.url }}">Rozwiazanie</a> <br>
+            </div>
             {% else %}
             <h3>Brak przesłanego pliku.</h3>
             {% endif %}
-            <form method="post" enctype="multipart/form-data">
-              {% csrf_token %}
-              {{ form.as_p }}
-              <button type="submit">Submit</button>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+          <div class="cr_3_action">
+            <button type="button" class="btn_cancel">
+              <a href="{{request.META.HTTP_REFERER}}" >Cancel</a>
+            </button>
+            <button type="submit" class="btn_submit">
+              Submit
+            </button>
+          </div>
             </form>
         </div>
+</section>
 {% endblock %}

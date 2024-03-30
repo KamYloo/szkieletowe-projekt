@@ -2,42 +2,89 @@
 {% load static %}
 {% load file_name %}
 {% block content %}
-    <h1>{{ course.title }}</h1>
-    <hr>
-    {% for topic in topics %}
-        <div class="pt-3">
-            <h1>{{ topic.title }}</h1><br>
-            <h3>{{ topic.content }}</h3><br>
-            {% for file in topic.files.all %}
-                <a class="ml-2" href="{{ file.file.url }}" target="_blank">{{ file.file.name|filename }}</a>
-                {% if user|has_group:"Nauczyciel" %}
-                    <a class="ml-2" href="{% url 'delete-file' course.id file.id %}"><button style="background-color: #f55151">Delete file</button></a><br>
+   <div class="course_name">
+        <h1>{{ course.title }}</h1>
+   </div>
+ {% if user|has_group:"Nauczyciel" %}
+     <div class="add_topic_button">
+          <a href="{% url 'add-topic' course.id  %}">Add Topic</a>
+     </div>
+{% endif %}
+      <section class="course_details">
+        <div class="participants">
+            <div class="participants_title">
+                <h2>Uczestnicy</h2>
+            </div>
+          <div class="teacher">
+            <h3>Nauczyciel</h3>
+            <img src="{{course.teacher.profile_pic.url}}" alt="" />
+            <p>{{course.teacher}}</p>
+          </div>
+            <hr>
+          <h3>Studenci</h3>
+          <ul class="student_list">
+            <li class="student_data">
+              <img src="{% static 'images/guest-user.webp' %}" alt="" />
+              <p>Imie nazwisko</p>
+              <span>Data dalaczenia</span>
+            </li>
+          </ul>
+        </div>
+        <div class="course_content">
+          {% for topic in topics %}
+          <div class="task">
+            <div class="tittle_task">
+              <h2>{{ topic.title }}</h2>
+              {% if user|has_group:"Nauczyciel" %}
+              <div class="options_in_course">
+                <i class="fa-solid fa-gear" id="option_topic"></i>
+                <ul class="list">
+                  <li class="optiont" style="--i: 3">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <a class="option_topic" href="{% url 'topic-update' course.id topic.id %}">Update Topic</a>
+                  </li>
+                  <li class="optiont" style="--i: 2">
+                    <i class="fa-solid fa-upload"></i>
+                    <a class="option_topic" href="{% url 'create-assignments' course.id topic.id %}">Add assignment</a>
+                  </li>
+                  <li class="optiont" style="--i: 1">
+                    <i class="fa-solid fa-file-arrow-up"></i>
+                    <a class="option_topic" href="{% url 'add-file' course.id  topic.id %}">Add File</a>
+                  </li>
+                </ul>
+              </div>
+                {% endif %}
+            </div>
+            <span>{{ topic.content }}</span>
+            <p>Pliki:</p>
+             {% for file in topic.files.all %}
+              {% if user|has_group:"Nauczyciel" %}
+              <i class="fa-solid fa-file"></i>
+              <a href="{{ file.file.url }}">{{ file.file.name|filename }}</a>
+              <a class="ml-2" href="{% url 'delete-file' course.id file.id %}"><i class="fa-solid fa-trash-can"></i></a><br>
+              {% else %}
+              <i class="fa-solid fa-file"></i>
+              <a href="{{ file.file.url }}">{{ file.file.name|filename }}</a><br>
                 {% endif %}
             {% endfor %}
-            <br>
+            <p>Zadania:</p>
             {% for assignment in topic.assignments.all %}
-                {% if user|has_group:"Nauczyciel" %}
+               {% if user|has_group:"Nauczyciel" %}
+                <i class="fa-solid fa-marker"></i>
                 <a class="ml-2" href="{% url 'assignment-rate' course.id assignment.id %}">{{ assignment.title }}</a>
                 {% else %}
+                <i class="fa-solid fa-marker"></i>
                 <a class="ml-2" href="{% url 'assignment-submit' assignment.id %}">{{ assignment.title }}</a>
                 {% endif %}
                 {% if user|has_group:"Nauczyciel" %}
-                <a class="ml-2" href="{% url 'assignment-update' course.id assignment.id %}"><button  style="background-color: #06b473">Update</button></a>
-                <a class="ml-2" href="{% url 'assignment-remove' course.id assignment.id %}"><button style="background-color: #f55151">Remove</button></a><br>
+                <a class="ml-2" href="{% url 'assignment-update' course.id assignment.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a class="ml-2" href="{% url 'assignment-remove' course.id assignment.id %}"><i class="fa-solid fa-trash-can"></i></a><br>
                 {% endif %}
                 <br>
             {% endfor %}
             <br>
-            {% if user|has_group:"Nauczyciel" %}
-                <a class="ml-2" href="{% url 'create-assignments' course.id topic.id %}"><button >Add assignment</button></a><br>
-                <a class="ml-2" href="{% url 'add-file' course.id  topic.id %}"><button>Add file</button></a><br>
-                <a class="ml-2" href="{% url 'topic-update' course.id topic.id %}"><button>Update topic</button></a><br>
-            {% endif %}
-            <hr>
+          </div>
+          {% endfor %}
         </div>
-    {% endfor %}
-        <br>
-        <br>
-        <a class="ml-2" href="{% url 'add-topic' course.id  %}"><button>Add topic</button></a><br>
-        <a class="ml-2" href="{% url 'course_participants' course.id %}"><button>Course participants</button></a><br>
-    {% endblock %}
+
+        {% endblock %}

@@ -16,24 +16,37 @@
             </nav>
              {% if request.user.is_authenticated %}
             <div class="user_data">
-              <img src="{% static 'images/guest-user.webp' %}" alt="">
+              <img src="{{ user.profile.profile_pic.url }}" alt="">
               <div class="user_data_name">
-                <h2>{{user.username}}</h2>
-                <p>rola</p>
+                <h2>{{user.first_name}} {{user.last_name}}</h2>
+                <p>{{user.groups}}</p>
               </div>
               <div class="menu">
-                <svg  id="select_menu" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                <svg  onclick="toggleMenu()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
                 </svg>
-                <ul class="menu_list">
-                  <li class="option_menu" style="--i:2;">
-                      <a href="{% url 'profile' %}" class="option-text">Profil</a>
-                  </li>
-                  <li class="option_menu" style="--i:1;">
-                      <a href="{% url 'logout' %}" class="option-text">Logout</a>
-                  </li>
-              </ul>
               </div>
+                <div class="sub_menu_wrap" id="subMenu">
+            <div class="sub_menu">
+              <div class="user_info">
+                <img src="{{ user.profile.profile_pic.url }}" alt="" />
+                <h6>Rollaaaaa</h6>
+              </div>
+              <hr />
+              <a href="{% url 'profile' %}" class="sub_menu_link">
+                <i class="fa-regular fa-user"></i>
+                <p>Profile</p>
+                <i class="fa-solid fa-arrow-right"></i>
+                <span></span>
+              </a>
+              <a href="{% url 'logout' %}" class="sub_menu_link">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <p>Logout</p>
+                <i class="fa-solid fa-arrow-right"></i>
+                <span></span>
+              </a>
+            </div>
+          </div>
               </div>
          {% else %}
         <li class="btn"><a href="{% url 'login' %}">Login</a></li>

@@ -1,10 +1,23 @@
 {% extends "../base/base.html" %}
 {% load static %}
 {% block content %}
-    <h1>Add topic</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add topic</button>
-    </form>
+<section class="cr_1">
+        <div class="cr_2">
+          <div class="cr_3">
+            <h2>Add topic</h2>
+          </div>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+          <div class="cr_3_action">
+            <button type="button" class="btn_cancel">
+              <a href="{{request.META.HTTP_REFERER}}" >Cancel</a>
+            </button>
+            <button type="submit" class="btn_submit">
+              Submit
+            </button>
+          </div>
+            </form>
+        </div>
+</section>
 {% endblock %}

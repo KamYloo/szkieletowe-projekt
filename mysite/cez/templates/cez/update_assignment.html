@@ -3,13 +3,25 @@
 {% block title %}Zadanie{% endblock %}
 
 {% block content %}
-    <h1>Update {{ assignment.title }}</h1>
-
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save Changes</button>
-    </form>
+<section class="cr_1">
+        <div class="cr_2">
+          <div class="cr_3">
+            <h2>Update <br> {{ assignment.title }}</h2>
+          </div>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+          <div class="cr_3_action">
+            <button type="button" class="btn_cancel">
+              <a href="{{request.META.HTTP_REFERER}}" >Cancel</a>
+            </button>
+            <button type="submit" class="btn_submit">
+              Submit
+            </button>
+          </div>
+            </form>
+        </div>
+</section>
 {% endblock %}
 
 
