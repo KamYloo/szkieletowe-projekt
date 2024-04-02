@@ -2,10 +2,6 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
-
-
-
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -40,7 +36,7 @@
     <button type="submit" class="btn">Login</button>
 
     <div class="register-link">
-        <p>Don't have an account? <a href="#">Register</a></p>
+        <p>Don't have an account? <a href="{% url 'register-users' %}">Register</a></p>
     </div>
 </form>
     </div>

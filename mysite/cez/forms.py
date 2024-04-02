@@ -73,8 +73,8 @@ class RateSubmissionForm(forms.ModelForm):
         model = RateSubmission
         fields = ['grade', 'comment']
         widgets = {
-            'grade': forms.NumberInput(attrs={'class': 'custom_grade_input'}),
-            'comment': forms.Textarea(attrs={'class': 'custom_comment_textarea'}),
+            'grade': forms.NumberInput(attrs={'class': 'custom_grade_input', 'placeholder': 'Wprowadź ocene'}),
+            'comment': forms.Textarea(attrs={'class': 'custom_comment_textarea', 'placeholder': 'Wprowadź komentarz'}),
         }
 
 class TopicForm(forms.ModelForm):

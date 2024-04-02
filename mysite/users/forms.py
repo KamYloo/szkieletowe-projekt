@@ -14,11 +14,16 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField()
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form_control', 'placeholder': 'Wprowadź email'}))
 
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form_control', 'placeholder': 'Wprowadź nick'}),
+            'first_name': forms.TextInput(attrs={'class': 'form_control', 'placeholder': 'Wprowadź imie'}),
+            'last_name': forms.TextInput(attrs={'class': 'form_control', 'placeholder': 'Wprowadź nazwisko'}),
+        }
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:

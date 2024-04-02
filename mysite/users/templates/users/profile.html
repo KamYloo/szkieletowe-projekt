@@ -1,16 +1,71 @@
 {% extends "base/base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block title %}Profil {{user.username}}{% endblock %}
 
 {% block content %}
-    <div class="content-section">
-      <div class="media">
-        <img class="rounded-circle account-img" src="{{ user.profile.profile_pic.url }}">
-        <div class="media-body">
-          <h2 class="account-heading">{{ user.username }}</h2>
-          <p class="text-secondary">{{ user.email }}</p>
+<div class="profile_data">
+        <img class="profile_background" src="{% static 'images/profile_back_img.png' %}"">
+        <div class="profile">
+            <h1>Your Profile</h1>
+            <img src="{{ user.profile.profile_pic.url }}" alt="">
+            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+            <h3>{{ user.username }}</h3>
+            <p>{{ user.email }}</p>
+            <div class="edit_profile">
+                <a href="{% url 'update-profile' %}">Edit profile</a>
+            </div>
         </div>
+        <img class="profile_background" src="{% static 'images/profile_back_img.png' %}" alt="">
       </div>
-      <a class="ml-2" href="{% url 'update-profile' %}">Modyfikuj profil</a>
-    </div>
+
+      <div class="profile_info">
+          <hr>
+        <h2>Your Courses</h2>
+      </div>
+
+      <section class="courses_list">
+        <div class="course">
+            <img src="{% static 'images/default_course.jpg' %}" alt="">
+            <p class="tittle">Inżynieria Oprogramowania</p>
+            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>
+            <button class="join_button">Join</button>
+        </div>
+        <div class="course">
+            <img src="{% static 'images/default_course.jpg' %}" alt="">
+            <p class="tittle">Inżynieria Oprogramowania</p>
+            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>
+            <button class="join_button">Join</button>
+        </div>
+        <div class="course">
+            <img src="{% static 'images/default_course.jpg' %}" alt="">
+            <p class="tittle">Inżynieria Oprogramowania</p>
+            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>
+            <button class="join_button">Join</button>
+        </div>
+        <div class="course">
+            <img src="{% static 'images/default_course.jpg' %}" alt="">
+            <p class="tittle">Inżynieria Oprogramowania</p>
+            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>
+            <button class="join_button">Join</button>
+        </div>
+        <div class="course">
+            <img src="{% static 'images/default_course.jpg' %}" alt="">
+            <p class="tittle">Inżynieria Oprogramowania</p>
+            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>
+            <button class="join_button">Join</button>
+        </div>
+        <div class="course">
+            <img src="{% static 'images/default_course.jpg' %}" alt="">
+            <p class="tittle">Inżynieria Oprogramowania</p>
+            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>
+            <button class="join_button">Join</button>
+        </div>
+        <div class="course">
+            <img src="{% static 'images/default_course.jpg' %}" alt="">
+            <p class="tittle">Inżynieria Oprogramowania</p>
+            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>
+            <button class="join_button">Join</button>
+        </div>
+    </section>
 {% endblock content %}

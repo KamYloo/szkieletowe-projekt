@@ -337,6 +337,15 @@
   padding: 10px 0;
 }
 
+.cr_2 form span {
+  padding: 10px 10px;
+}
+
+.cr_2 form p a {
+  color: white;
+  font-weight: bold;
+}
+
 .cr_3_action {
   justify-content: center;
   text-align: center;
@@ -367,7 +376,9 @@
 
 }
 
-.custom_title_class, .custom_content_class, .custom_due_date_class, .custom_file_upload, .cr_4, .custom_semester_select, .custom_degree_select, .custom_access_key_input, .custom_grade_input, .custom_comment_textarea {
+.custom_title_class, .custom_content_class, .custom_due_date_class, .custom_file_upload, .cr_4,
+.custom_semester_select, .custom_degree_select, .custom_access_key_input, .custom_grade_input,
+.custom_comment_textarea, .form_control {
   width: 80%;
   height: 100%;
   background: transparent;
@@ -393,7 +404,8 @@
   max-height: 200px;
 }
 
-.custom_title_class::placeholder, .custom_content_class::placeholder, .custom_due_date_class::placeholder{
+.custom_title_class::placeholder, .custom_content_class::placeholder, .custom_due_date_class::placeholder,
+.custom_grade_input::placeholder, .custom_comment_textarea::placeholder, .form_control::placeholder{
     color: white;
 }
 
@@ -412,7 +424,11 @@ label {
   justify-content: center;
 }
 
-label[for="id_title"], label[for="id_content"], label[for="id_due_date"], label[for="id_file"], label[for="id_image"], label[for="id_description"], label[for="id_semester"], label[for="id_degree"], label[for="id_access_key"], label[for="id_grade"], label[for="id_comment"]{
+.cr_2 label[for="id_title"], .cr_2 label[for="id_content"], .cr_2 label[for="id_due_date"], .cr_2 label[for="id_file"],
+.cr_2 label[for="id_image"], .cr_2 label[for="id_description"], .cr_2 label[for="id_semester"], .cr_2 label[for="id_degree"],
+.cr_2 label[for="id_access_key"], .cr_2 label[for="id_grade"], .cr_2 label[for="id_comment"], .cr_2 label[for="id_username"],
+.cr_2 label[for="id_first_name"], .cr_2 label[for="id_last_name"], .cr_2 label[for="id_email"], .cr_2 label[for="id_profile_pic"],
+.cr_2 label[for="id_password"]{
   font-family: Forte;
   font-size: 25px;
 }
@@ -450,3 +466,189 @@ input[type="file"].custom-file-input {
   font-weight: bold;
 }
 
+.chat_layout {
+  display: flex;
+  justify-content: center;
+  margin-top: 0;
+  height: 52rem;
+}
+
+.title_chat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin-top: 2rem;
+}
+
+.title_chat .text_ {
+  border: solid 1px black;
+  width: 90rem;
+  text-align: center;
+  background: var(--color-main);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.title_chat h2 {
+  font-size: 48px;
+  font-weight: bold;
+  word-spacing: 10px;
+  color: white;
+  font-family: "Permanent Marker", cursive;
+  text-shadow: 1px 1px 5px black;
+}
+
+.chat_box {
+  height: 40rem;
+  width: 90rem;
+  border: solid 1px black;
+  grid-template-columns: 2fr 5fr;
+  display: grid;
+}
+
+.user_list {
+  border: solid 2px green;
+  width: 22rem;
+}
+
+.chat {
+  border: solid 2px red;
+  width: 68rem;
+}
+
+.my_1 {
+  overflow-y: auto;
+  border: solid 2px orange;
+ flex-direction: column;
+ width: 100%;
+ height: 35rem;
+}
+
+.recipent_message,
+.my_message {
+  display: flex;
+  padding: 15px 15px;
+  align-items: center;
+  border: solid 2px yellow;
+  max-width: 100%;
+
+}
+
+.recipent_message {
+  margin-right: 50%;
+}
+
+.my_message {
+  margin-left: 50%;
+}
+
+.recipent_message img,
+.my_message img , .chat_box ul li img{
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+}
+
+.recipent_message .message_content,
+.my_message .message_content {
+  margin-left: 15px;
+  text-align: center;
+  max-width: 88%;
+  border: solid 2px pink;
+}
+
+.recipent_message .message_content h6,
+.my_message .message_content h6 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.recipent_message .message_content .message,
+.my_message .message_content .message {
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px 15px;
+  max-width: 100%;
+  text-align: left;
+}
+
+.recipent_message .message_content .message p,
+.my_message .message_content .message p {
+  word-wrap: break-word;
+}
+
+.send_message {
+  border: solid 2px black;
+  height: 5rem;
+  width: 68rem;
+}
+
+.send_message form {
+  border: solid 2px rgb(156, 3, 245);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.send_message form input {
+  width: 80%;
+  height: 3rem;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  padding: 0 2rem;
+}
+
+.send_message form i {
+  background-color: var(--color-main);
+  margin-left: 1rem;
+  font-size: 26px;
+  border-radius: 50%;
+  padding: 10px 10px;
+  cursor: pointer;
+}
+
+.user_list {
+  height: 40rem;
+}
+
+.user_list ul {
+  overflow-y: auto;
+  height: 37.5rem;
+}
+.user_list ul li {
+  background: white;
+  border-radius: 15px;
+  display: flex;
+  margin: 1rem 1rem;
+  align-items: center;
+  padding: 5px 5px;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+}
+
+.user_list ul li:hover {
+  background: var(--color-main-light);
+}
+
+.user_list ul li p {
+  margin: 0 1rem;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-dark);
+  word-wrap: break-word;
+  max-width: 12rem;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.user_list ul li i {
+  background-color: var(--color-main);
+  font-size: 14px;
+  border-radius: 50%;
+  padding: 10px 10px;
+  font-weight: bold;
+}

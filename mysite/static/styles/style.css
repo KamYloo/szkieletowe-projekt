@@ -112,6 +112,7 @@ header .btn:hover a {
     max-width: 50px;
     max-height: 50px;
     border-radius: 50%;
+    border: solid 2px white
 }
 .user_data .user_data_name {
     text-align: center;
@@ -164,7 +165,7 @@ header .btn:hover a {
   color: #050046;
 }
 
-.sub_menu hr {
+.sub_menu hr, .profile_info hr {
   border: 0;
   height: 1px;
   width: 100%;
@@ -449,7 +450,7 @@ header .btn:hover a {
     margin-top: 20px;
 }
 
-.courses_layout h1 {
+.courses_layout h1, .profile_info h2 {
   font-size: 50px;
   letter-spacing: 1px;
   font-family: "Permanent Marker", cursive;
@@ -463,7 +464,9 @@ header .btn:hover a {
   display: flex;
   align-items: center;
   gap: 1rem;
+  height: 2.2rem;
   border-radius: 4px;
+    margin-top: 2px;
 }
 
 .search_course .fa-solid.fa-magnifying-glass {
@@ -648,68 +651,75 @@ header .btn:hover a {
   font-weight: bold;
 }
 
-/* create_form_style */
-
-.room_form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.creation {
-  justify-content: center;
-  text-align: center;
-  width: 420px;
-  background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  color: #fff;
-  border-radius: 10px;
-  padding: 30px 40px;
-}
-
-.space_form h1 {
-  font-size: 600;
-  font-weight: bold;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-
-.form-group label {
-  display: block;
-  font-weight: bold;
-}
-.form-group input[type="text"],
-.form-group input[type="password"],
-.form-group textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-
-.form-action .btn_bbt {
-  text-decoration: none;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #fff;
-  color: black;
-  cursor: pointer;
-  height: 44px;
-}
-
-.form-action .btn_bbt:hover {
-  background-color: transparent;
-}
-
 .pt-3 .ml-2 {
   color: white;
 }
 
+.profile_data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.profile_data .profile img {
+  height: 8rem;
+  width: 8rem;
+  border-radius: 50%;
+  border: solid 3px white
+}
+
+.profile_data .profile h1 {
+  font-size: 50px;
+  font-weight: 600;
+  text-shadow: 1px 1px 5px black;
+  color: #fff;
+}
+
+.profile_data .profile h2 {
+  font-size: 28px;
+}
+
+.profile_data .profile h3 {
+  font-size: 20px;
+}
+
+.profile_info {
+  justify-content: center;
+  text-align: center;
+}
+
+.edit_profile {
+  background: #fff;
+  width: 8rem;
+  margin-left: 5.3rem;
+  border-radius: 10px;
+  height: 2rem;
+  text-align: center;
+  padding: 4px;
+  transition: all 0.3s ease-in-out;
+  margin-top: 10px;
+}
+
+.edit_profile:hover {
+  background: var(--color-main);
+}
+
+.edit_profile a {
+ text-decoration: none;
+ color: var(--color-dark);
+ font-weight: bold;
+ width: 100%;
+}
+
+.profile_background {
+  height: 20rem;
+  width: 20rem;
+  margin: 0 7rem;
+}
+
+.profile_info hr {
+    margin-left: 10%;
+    width: 80%;
+}

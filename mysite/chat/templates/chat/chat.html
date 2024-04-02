@@ -1,0 +1,117 @@
+{% extends "../base/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="title_chat">
+        <div class="text_">
+          <h2>Chat Room</h2>
+        </div>
+      </div>
+      <section class="chat_layout">
+
+        <div class="chat_box">
+            <div class="user_list">
+              <form class="search_course" method="GET" action="#">
+                <label>
+                  <input name="#" placeholder="Search person" />
+                  <ion-icon class="fa-solid fa-magnifying-glass"></ion-icon>
+                </label>
+              </form>
+
+              <ul>
+                <li>
+                  <img src="{% static 'images/guest-user.webp' %}" alt="">
+                  <p>Imie Nazwisko</p>
+                  <i class="fa-regular fa-comments"></i>
+                </li>
+                <li>
+                  <img src="{% static 'images/guest-user.webp' %}" alt="">
+                  <p>Imie Nazwiskooo</p>
+                  <i class="fa-regular fa-comments"></i>
+                </li>
+                <li>
+                  <img src="{% static 'images/guest-user.webp' %}" alt="">
+                  <p>Imie Nazwisko</p>
+                  <i class="fa-regular fa-comments"></i>
+                </li>
+                <li>
+                  <img src="{% static 'images/guest-user.webp' %}" alt="">
+                  <p>Imie Nazwisko</p>
+                  <i class="fa-regular fa-comments"></i>
+                </li>
+                <li>
+                  <img src="{% static 'images/guest-user.webp' %}" alt="">
+                  <p>Imie Nazwisko</p>
+                  <i class="fa-regular fa-comments"></i>
+                </li>
+                <li>
+                  <img src="{% static 'images/guest-user.webp' %}" alt="">
+                  <p>Imie Nazwisko</p>
+                  <i class="fa-regular fa-comments"></i>
+                </li>
+                <li>
+                  <img src="{% static 'images/guest-user.webp' %}" alt="">
+                  <p>Imie Nazwisko</p>
+                  <i class="fa-regular fa-comments"></i>
+                </li>
+                <li>
+                  <img src="{% static 'images/guest-user.webp' %}" alt="">
+                  <p>Imie Nazwisko</p>
+                  <i class="fa-regular fa-comments"></i>
+                </li>
+                <li>
+                  <img src="{% static 'images/guest-user.webp' %}" alt="">
+                  <p>Imie Nazwisko</p>
+                  <i class="fa-regular fa-comments"></i>
+                </li>
+              </ul>
+            </div>
+            <div class="chat">
+              <div class="my_1">
+                <div class="recipent_message">
+                    <img src="{% static 'images/guest-user.webp' %}" alt="">
+                    <div class="message_content">
+                        <h6>Imie Nazwisko</h6>
+                        <div class="message">
+                            <p>blaladlasidjadsddssdd</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="my_message">
+                  <div class="message_content">
+                      <h6>Imie Nazwisko</h6>
+                      <div class="message">
+                          <p>blaladlasidjadsddssddsfdddddddddddddddddddddgfdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaada</p>
+                      </div>
+                  </div>
+                  <img src="{% static 'images/guest-user.webp' %}" alt="">
+              </div>
+                <div class="recipent_message">
+                    <img src="{% static 'images/guest-user.webp' %}" alt="">
+                    <div class="message_content">
+                        <h6>Imie Nazwisko</h6>
+                        <div class="message">
+                            <p>blaladlasidjadsddssddsfdddddddddddddddddddddda</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipent_message">
+                    <img src="{% static 'images/guest-user.webp' %}" alt="">
+                    <div class="message_content">
+                        <h6>Imie Nazwisko</h6>
+                        <div class="message">
+                            <p>blaladlasidjadsddssddsfdddddddddddddddddddddgfdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaada</p>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="send_message">
+                <form action="">
+                  <input type="text" placeholder="Wyslij wiadomosc" >
+                  <i class="fa-regular fa-paper-plane" ></i>
+                </form>
+              </div>
+            </div>
+        </div>
+      </section>
+{% endblock %}
