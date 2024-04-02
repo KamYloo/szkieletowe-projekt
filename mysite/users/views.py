@@ -10,6 +10,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
+from cez.models import Course, Enrollment
 
 from django.http import HttpResponse
 
@@ -60,7 +61,9 @@ def activate(request, uidb64, token):
 
 @login_required
 def profile(request):
-    return render(request, 'users/profile.html')
+    enrollments = Enrollment.objects.filter(student_id=request.user).values_list('course_id', flat=True)
+    course = Course.objects.filter(pk__in=enrollments)
+    return render(request, 'users/profile.html', {'courses': course})
 
 @login_required
 def update_profile(request):

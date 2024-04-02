@@ -4,8 +4,8 @@
 {% block title %}Profil {{user.username}}{% endblock %}
 
 {% block content %}
-<div class="profile_data">
-        <img class="profile_background" src="{% static 'images/profile_back_img.png' %}"">
+    <div class="profile_data">
+        <img class="profile_background" src="{% static 'images/profile_back_img.png' %}">
         <div class="profile">
             <h1>Your Profile</h1>
             <img src="{{ user.profile.profile_pic.url }}" alt="">
@@ -17,55 +17,49 @@
             </div>
         </div>
         <img class="profile_background" src="{% static 'images/profile_back_img.png' %}" alt="">
-      </div>
+    </div>
 
-      <div class="profile_info">
-          <hr>
+    <div class="profile_info">
+        <hr>
         <h2>Your Courses</h2>
-      </div>
+    </div>
 
-      <section class="courses_list">
+    <section class="courses_list">
+      {% for course in courses %}
         <div class="course">
-            <img src="{% static 'images/default_course.jpg' %}" alt="">
-            <p class="tittle">Inżynieria Oprogramowania</p>
-            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>
-            <button class="join_button">Join</button>
+        <img src="{{course.image.url}}" alt="" />
+        <p class="tittle">{{ course.title }}</p>
+        <p class="description">
+        {{course.description}}
+        </p>
         </div>
-        <div class="course">
-            <img src="{% static 'images/default_course.jpg' %}" alt="">
-            <p class="tittle">Inżynieria Oprogramowania</p>
-            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>
-            <button class="join_button">Join</button>
-        </div>
-        <div class="course">
-            <img src="{% static 'images/default_course.jpg' %}" alt="">
-            <p class="tittle">Inżynieria Oprogramowania</p>
-            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>
-            <button class="join_button">Join</button>
-        </div>
-        <div class="course">
-            <img src="{% static 'images/default_course.jpg' %}" alt="">
-            <p class="tittle">Inżynieria Oprogramowania</p>
-            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>
-            <button class="join_button">Join</button>
-        </div>
-        <div class="course">
-            <img src="{% static 'images/default_course.jpg' %}" alt="">
-            <p class="tittle">Inżynieria Oprogramowania</p>
-            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>
-            <button class="join_button">Join</button>
-        </div>
-        <div class="course">
-            <img src="{% static 'images/default_course.jpg' %}" alt="">
-            <p class="tittle">Inżynieria Oprogramowania</p>
-            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>
-            <button class="join_button">Join</button>
-        </div>
-        <div class="course">
-            <img src="{% static 'images/default_course.jpg' %}" alt="">
-            <p class="tittle">Inżynieria Oprogramowania</p>
-            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>
-            <button class="join_button">Join</button>
-        </div>
+      {% endfor %}
+<!--        <div class="course">-->
+<!--            <img src="{% static 'images/default_course.jpg' %}" alt="">-->
+<!--            <p class="tittle">Inżynieria Oprogramowania</p>-->
+<!--            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>-->
+<!--            <button class="join_button">Join</button>-->
+<!--        </div>-->
+<!--        <div class="course">-->
+<!--            <img src="{% static 'images/default_course.jpg' %}" alt="">-->
+<!--            <p class="tittle">Inżynieria Oprogramowania</p>-->
+<!--            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>-->
+<!--            <button class="join_button">Join</button>-->
+<!--        </div>-->
+<!--        <div class="course">-->
+<!--            <img src="{% static 'images/default_course.jpg' %}" alt="">-->
+<!--            <p class="tittle">Inżynieria Oprogramowania</p>-->
+<!--            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>-->
+<!--            <button class="join_button">Join</button>-->
+<!--        </div>-->
+<!--        <div class="course">-->
+<!--            <img src="{% static 'images/default_course.jpg' %}" alt="">-->
+<!--            <p class="tittle">Inżynieria Oprogramowania</p>-->
+<!--            <p class="description">nauka diagramow przypadkow uzycia blablablablablablablabalbal</p>-->
+<!--            <button class="join_button">Join</button>-->
+<!--        </div>-->
+<!--            </div>-->
+<!--      <a class="ml-2" href="{% url 'update-profile' %}">Modyfikuj profil</a>-->
+<!--    </div>-->
     </section>
 {% endblock content %}
