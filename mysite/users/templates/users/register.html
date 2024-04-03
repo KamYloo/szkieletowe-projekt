@@ -1,22 +1,62 @@
-{% extends "base/base.html" %}
-{% load crispy_forms_tags %}
-{% block title %}Rejestracja{% endblock %}
 
+<!DOCTYPE html>
+{% load crispy_forms_tags %}
+{% load static %}
 {% block content %}
-    <h1>Rejestracja!</h1>
-    <form method="POST">
-      {% csrf_token %}
-        <fieldset class="form-group">
-            {{form.username|as_crispy_field}}
-            {{form.email|as_crispy_field}}
-            {{form.first_name|as_crispy_field}}
-            {{form.last_name|as_crispy_field}}
-            {{form.password1|as_crispy_field}}
-            {{form.password2|as_crispy_field}}
-            {{form.captcha}}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info"type="submit">Zarejestruj</button>
-        </div>
-    </form>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/user_style.css' %}" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <title>Register Form</title>
+  </head>
+  <body>
+    <div class="wrapper">
+        <form method="post">
+    {% csrf_token %}
+    <h1>Register</h1>
+    <div class="input-box">
+        {{ form.username }}
+        <i class="bx bxs-user"></i>
+    </div>
+    <div class="input-box">
+        {{ form.email }}
+        <i class='bx bx-envelope'></i>
+    </div>
+
+    <div class="input-box">
+        {{ form.first_name }}
+        <i class="bx bxs-user"></i>
+    </div>
+    <div class="input-box">
+        {{ form.last_name }}
+        <i class="bx bxs-user"></i>
+    </div>
+    <div class="input-box">
+        {{ form.password1 }}
+        <i class="bx bxs-lock-alt"></i>
+    </div>
+    <div class="input-box">
+        {{ form.password2 }}
+        <i class="bx bxs-lock-alt"></i>
+    </div>
+    <div class="input-box">
+        {{ form.captcha }}
+    </div>
+
+
+    <button type="submit" class="btn">Register</button>
+
+    <div class="register-link">
+        <p>Have you an account? <a href="{% url 'login' %}">Login</a></p>
+    </div>
+</form>
+    </div>
+  </body>
+</html>
+
 {% endblock %}

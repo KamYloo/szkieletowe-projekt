@@ -205,12 +205,14 @@ header .btn:hover a {
   padding: 40px 180px 30px;
   width: 50%;
   float: left;
+    max-height: 60rem;
 }
 
 .content .main-text {
   position: relative;
   z-index: 2;
   margin-bottom: 40px;
+  height: 40rem;
 }
 
 .content .main-text h6 {
@@ -241,6 +243,7 @@ header .btn:hover a {
   line-height: 1.8;
   font-size: 15px;
   margin-bottom: 50px;
+    max-height: 100%;
 }
 
 .content .main-text a {
@@ -406,6 +409,7 @@ header .btn:hover a {
 .numbers_web {
   background: linear-gradient(#ffffff, #5da6eb);
   height: 10rem;
+  width: 100%;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   align-items: center;
   display: flex;

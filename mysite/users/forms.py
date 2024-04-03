@@ -6,12 +6,18 @@ from django_recaptcha.fields import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV2Invisible # widget=ReCaptchaV2Invisible
 
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField()
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
     captcha = ReCaptchaField()
     class Meta:
         model = User
-        fields = ['username', 'email','first_name', 'last_name', 'password1', 'password2', 'captcha'] #
-
+        fields = ['username', 'email','first_name', 'last_name', 'password1', 'password2', 'captcha']
+        widgets = {
+            'username': forms.TextInput(attrs={'placeholder': 'Username'}),
+            'first_name': forms.TextInput(attrs={'placeholder': 'First Name'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Last Name'}),
+            'password1': forms.PasswordInput(attrs={'placeholder': 'Password'}),
+            'password2': forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
+        }
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form_control', 'placeholder': 'Wprowadź email'}))
