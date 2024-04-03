@@ -15,7 +15,7 @@
             {% csrf_token %}
             <label for="file-upload" class="custom_file_upload">Wybierz plik: <span id="file-name-placeholder">Brak wybranego pliku</span></label>
               <input id="file-upload" type="file" name="file" class="input_file" onchange="updateFileName(this)">
-          <div class="cr_3_action">
+            <div class="cr_3_action">
             <button type="button" class="btn_cancel">
               <a href="{{request.META.HTTP_REFERER}}" >Cancel</a>
             </button>

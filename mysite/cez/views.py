@@ -6,8 +6,7 @@ from .models import Assignment, Submission, Topic, File, RateSubmission
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
-from .forms import SubmissionForm, CourseForm, AccessKeyForm
-from .forms import SubmissionForm,TopicUpdateForm, AssignmentForm, AssignmentUpdateForm, FileForm, RateSubmissionForm, TopicForm
+from .forms import SubmissionForm,TopicUpdateForm, AssignmentForm, AssignmentUpdateForm, FileForm, RateSubmissionForm, TopicForm, CourseForm, AccessKeyForm
 from django.contrib.auth.decorators import user_passes_test
 from django.forms import modelformset_factory
 from django.db.models import Q
@@ -57,10 +56,15 @@ def create_assignments(request, course_id, topic_id):
 def submit_assignment(request, assignment_id):
     try:
         assignment = Assignment.objects.get(pk=assignment_id)
+        submission_instance = Submission.objects.filter(assignment=assignment, student=request.user.profile).first()
     except Assignment.DoesNotExist:
         messages.error(request, 'Assignment does not exist')
         return redirect('index')
-    submission_instance = Submission.objects.filter(assignment=assignment, student=request.user.profile).first()
+
+    grade = None
+    if submission_instance:
+        grade = RateSubmission.objects.filter(submission_id=submission_instance.id).first()
+
     if request.method == 'POST':
         form = SubmissionForm(request.POST, request.FILES, instance=submission_instance)
         if form.is_valid():
@@ -71,8 +75,9 @@ def submit_assignment(request, assignment_id):
             return redirect('assignment-submit', assignment_id)
     else:
         form = SubmissionForm(instance=submission_instance)
-        grade = RateSubmission.objects.filter(submission_id = submission_instance.id).first()
-    return render(request, 'cez/submit_assignment.html', {'form': form, 'assignment':assignment, 'grade': grade})
+
+    return render(request, 'cez/submit_assignment.html', {'form': form, 'assignment': assignment, 'grade': grade})
+
 
 @login_required
 def create_course(request):
@@ -114,6 +119,7 @@ def remove_assignment(request, course_id, assignment_id):
 @login_required
 def enroll_to_course(request, course_id):
     course = Course.objects.get(pk=course_id)
+    participants = Enrollment.objects.filter(course_id=course_id)
     try:
         enrollment = Enrollment.objects.get(student=request.user, course=course)
     except Enrollment.DoesNotExist:
@@ -129,7 +135,7 @@ def enroll_to_course(request, course_id):
                     form.add_error(None, 'Invalid access key')
         else:
             form = AccessKeyForm()
-        return render(request, 'cez/enroll_to_course.html', {'form': form})
+        return render(request, 'cez/enroll_to_course.html', {'form': form, 'participants': participants})
     return redirect('course_detail', course_id=course_id)
 
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
@@ -180,7 +186,8 @@ def delete_file(request, course_id, file_id):
 def course_detail(request, course_id):
     course = Course.objects.get(pk=course_id)
     topics = Course.objects.get(pk=course_id).topics.all()
-    return render(request, 'cez/course_detail.html', {'course': course, 'topics': topics, 'user': request.user})
+    participants = Enrollment.objects.filter(course_id=course_id)
+    return render(request, 'cez/course_detail.html', {'course': course, 'topics': topics, 'user': request.user, 'participants': participants})
 
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def rate_assignment(request, course_id, assignment_id):
