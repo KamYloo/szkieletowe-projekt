@@ -235,6 +235,13 @@ def add_topic(request, course_id):
         form = TopicForm()
     return render(request, 'cez/add_topic.html', {'form': form})
 
-def course_participants(request, course_id):
-    participants = Enrollment.objects.filter(course_id=course_id)
-    return render(request, 'cez/course_participants.html', {'participants': participants})
+@user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
+def delete_topic(request, course_id, topic_id):
+    try:
+        topic = Topic.objects.get(id=topic_id)
+        topic.delete()
+        messages.success(request, "Deleted topic")
+        return redirect('course_detail', course_id=course_id)
+    except Topic.DoesNotExist:
+        messages.error(request,"Topic does not exist.")
+        return redirect('course_detail', course_id=course_id)

@@ -43,18 +43,23 @@
         <div class="options_in_course">
           <i class="fa-solid fa-gear" id="option_topic"></i>
           <ul class="list">
-            <li class="optiont" style="--i: 3">
+            <li class="optiont" style="--i: 4">
               <i class="fa-solid fa-pen-to-square"></i>
               <a class="option_topic" href="{% url 'topic-update' course.id topic.id %}">Update Topic</a>
             </li>
-            <li class="optiont" style="--i: 2">
+            <li class="optiont" style="--i: 3">
               <i class="fa-solid fa-upload"></i>
               <a class="option_topic" href="{% url 'create-assignments' course.id topic.id %}">Add assignment</a>
             </li>
-            <li class="optiont" style="--i: 1">
+            <li class="optiont" style="--i: 2">
               <i class="fa-solid fa-file-arrow-up"></i>
               <a class="option_topic" href="{% url 'add-file' course.id  topic.id %}">Add File</a>
             </li>
+            <li class="optiont" style="--i: 1">
+              <i class="fa-solid fa-trash-can"></i>
+              <a class="option_topic" href="{% url 'topic-delete' course.id  topic.id %}">Delete Topic</a>
+            </li>
+
           </ul>
         </div>
         {% endif %}
