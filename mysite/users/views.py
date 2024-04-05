@@ -19,11 +19,9 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            #user = form.save()
             user = form.save()
             user.is_active = False
             user.save()
-            # username = form.cleaned_data.get('username')
             current_site = get_current_site(request)
             mail_subject = 'Activation link has been sent to your email id'
             message = render_to_string('users/acc_active_email.html', {
@@ -37,10 +35,16 @@ def register(request):
                 mail_subject, message, to=[to_email]
             )
             email.send()
-            #messages.success(request, 'Please confirm your email address to complete the registration')
+            messages.success(request, 'Please confirm your email address to complete the registration')
             return redirect('login')
     else:
         form = UserRegisterForm(request.POST)
+        form.fields['password1'].widget.attrs.update({
+            'placeholder': 'Password'
+        })
+        form.fields['password2'].widget.attrs.update({
+            'placeholder': 'Confirm Password'
+        })
     return render(request, "users/register.html", {'form': form})
 
 def activate(request, uidb64, token):
@@ -53,10 +57,10 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        #messages.success(request, 'Udało ci się aktywować konto!')
+        messages.success(request, 'Udało ci się aktywować konto!')
         return redirect('login')
     else:
-        #messages.error(request, 'Please confirm your email address to complete the registration')
+        messages.error(request, 'Please confirm your email address to complete the registration')
         return redirect('register')
 
 @login_required

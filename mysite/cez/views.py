@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
-from .models import Course ,Enrollment, Student
+from .models import Course ,Enrollment
 from .models import Assignment, Submission, Topic, File, RateSubmission
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView

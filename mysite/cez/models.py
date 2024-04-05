@@ -65,6 +65,7 @@ class Degree(models.Model):
     degree = models.CharField(max_length=50)
     def __str__(self):
         return self.degree
+
 class Course(models.Model):
    teacher = models.ForeignKey(Profile, on_delete=models.CASCADE)
    topics = models.ManyToManyField(Topic, blank=True)
@@ -86,10 +87,6 @@ class Course(models.Model):
            output_size = (612, 408)
            img.thumbnail(output_size)
            img.save(self.image.path)
-
-class Student(models.Model):
-   student = models.OneToOneField(User, on_delete=models.CASCADE)
-   courses = models.ManyToManyField(Course, related_name='students')
 
 
 class Enrollment(models.Model):
