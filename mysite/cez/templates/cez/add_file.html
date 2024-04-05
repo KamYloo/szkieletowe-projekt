@@ -10,17 +10,23 @@
           </div>
           <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-             <label for="file-upload" class="custom_file_upload">Wybierz plik: <span id="file-name-placeholder">Brak wybranego pliku</span></label>
-              <input id="file-upload" type="file" name="file" class="input_file" onchange="updateFileName(this)">
-          <div class="cr_3_action">
-            <button type="button" class="btn_cancel">
-              <a href="{{request.META.HTTP_REFERER}}" >Cancel</a>
-            </button>
-            <button type="submit" class="btn_submit">
-              Submit
-            </button>
-          </div>
-            </form>
+                 <div class="form-group">
+                    <label for="id_name">Name:</label>
+                    <input type="text" id="id_name" name="name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="file-upload" class="custom_file_upload">Wybierz plik: <span id="file-name-placeholder">Brak wybranego pliku</span></label>
+                    <input id="file-upload" type="file" name="file" class="input_file" onchange="updateFileName(this)">
+                </div>
+              <div class="cr_3_action">
+                <button type="button" class="btn_cancel">
+                  <a href="{{request.META.HTTP_REFERER}}" >Cancel</a>
+                </button>
+                <button type="submit" class="btn_submit">
+                  Submit
+                </button>
+              </div>
+          </form>
         </div>
 </section>
 {% endblock %}

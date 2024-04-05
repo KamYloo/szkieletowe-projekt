@@ -6,7 +6,7 @@ from .models import Assignment, Submission, Topic, File, RateSubmission
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
-from .forms import SubmissionForm,TopicUpdateForm, AssignmentForm, AssignmentUpdateForm, FileForm, RateSubmissionForm, TopicForm, CourseForm, AccessKeyForm
+from .forms import SubmissionForm,TopicUpdateForm, AssignmentForm, AssignmentUpdateForm, FileForm, RateSubmissionForm, TopicForm, CourseForm, AccessKeyForm, CourseFileForm
 from django.contrib.auth.decorators import user_passes_test
 from django.forms import modelformset_factory
 from django.db.models import Q
@@ -163,7 +163,7 @@ def add_file(request, course_id, topic_id):
         messages.error(request, 'Topic does not exist')
         return redirect('topic')
     if request.method == 'POST':
-        form = FileForm(request.POST, request.FILES)
+        form = CourseFileForm(request.POST, request.FILES)
         if form.is_valid():
             file = form.save()
             topic.files.add(file)
@@ -171,7 +171,7 @@ def add_file(request, course_id, topic_id):
             messages.success(request, 'File added')
             return redirect('course_detail', course_id)
     else:
-        form = FileForm()
+        form = CourseFileForm()
     return render(request, 'cez/add_file.html', {'form': form})
 
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())

@@ -8,8 +8,8 @@ from PIL import Image
 
 class Topic(models.Model):
     title = models.CharField(max_length=64)
-    content = models.CharField(max_length=1024)
-    files = models.ManyToManyField('File',blank=True)
+    content = models.CharField(max_length=1024, blank=True)
+    files = models.ManyToManyField('CourseFile',blank=True)
     assignments = models.ManyToManyField('Assignment',blank=True)
 
     def __str__(self):
@@ -20,6 +20,13 @@ class File(models.Model):
 
     def __str__(self):
         return f"{self.file.name}"
+
+class CourseFile(models.Model):
+    name = models.CharField(max_length=64, blank=False)
+    file = models.FileField(upload_to='pdf_files/')
+
+    def __str__(self):
+        return f"{self.name}"
 
 class Assignment(models.Model):
     title = models.CharField(max_length=64)
