@@ -151,7 +151,7 @@
 
 .fa-solid.fa-gear {
   cursor: pointer;
-  z-index: 19;
+  z-index: 17;
 }
 
 .options_in_course .list {
@@ -159,7 +159,7 @@
   width: 210px;
   margin-top: 20px;
   right: -25px;
-  z-index: 20;
+  z-index: 18;
 }
 
 .options_in_course .list .optiont {
