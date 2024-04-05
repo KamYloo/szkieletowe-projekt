@@ -151,6 +151,7 @@
 
 .fa-solid.fa-gear {
   cursor: pointer;
+  z-index: 19;
 }
 
 .options_in_course .list {
@@ -158,6 +159,7 @@
   width: 210px;
   margin-top: 20px;
   right: -25px;
+  z-index: 20;
 }
 
 .options_in_course .list .optiont {
@@ -192,7 +194,7 @@
   border-top-left-radius: 8px;
 }
 
-.list .optiont:nth-child(3) {
+.list .optiont:nth-child(4) {
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
 }
