@@ -16,6 +16,7 @@
             </nav>
              {% if request.user.is_authenticated %}
             <div class="user_data">
+                <input type="hidden" id="logged_in_user" value="{{ user.id }}" />
               <img src="{{ user.profile.profile_pic.url }}" alt="">
               <div class="user_data_name">
                 <h2>{{user.first_name}} {{user.last_name}}</h2>

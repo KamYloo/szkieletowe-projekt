@@ -2,28 +2,27 @@ from django.db import models
 from users.models import Profile
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
+from django.db.models import Q
+
+class ThreadManager(models.Manager):
+    def by_user(self, **kwargs):
+        user = kwargs.get('user')
+        lookup = Q(first_person=user) | Q(second_person=user)
+        q = self.get_queryset().filter(lookup).distinct()
+        return q
+
+class Thread(models.Model):
+    first_person = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='thread_first_person')
+    second_person = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='thread_second_person')
+    updated = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    objects = ThreadManager()
+    class Meta:
+        unique_together = ('first_person', 'second_person')
+
 
 class ChatMessage(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="user")
-    sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="sender")
-    reciever = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="reciever")
-    message = models.TextField(max_length=500)
-    is_read = models.BooleanField(default=False)
-    date = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['date']
-        verbose_name_plural = "Message"
-
-    def __str__(self):
-        return f"{self.sender} - {self.reciever}"
-
-    @property
-    def sender_profile(self):
-        sender_profile = Profile.objects.get(user=self.sender)
-        return sender_profile
-
-    @property
-    def reciever_profile(self):
-        reciever_profile = Profile.objects.get(user=self.reciever)
-        return reciever_profile
+    thread = models.ForeignKey(Thread, on_delete=models.CASCADE, null=True, blank=True, related_name='chat_message_thread')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)

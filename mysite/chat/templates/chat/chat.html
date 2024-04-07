@@ -18,100 +18,67 @@
                 </label>
               </form>
 
-              <ul>
-                <li>
-                  <img src="{% static 'images/guest-user.webp' %}" alt="">
-                  <p>Imie Nazwisko</p>
+              <ul class="contacts">
+                {% for thread in Threads %}
+                <li class="{% if forloop.first %}active{% endif %} contact-li"
+                  chat-id="chat_{{ thread.id }}"
+                    style="cursor: pointer">
+
+                    {% if thread.first_person == user %}
+                        <img src="{{ thread.second_person.profile.profile_pic.url }}" alt="">
+                        <p>{{ thread.second_person.first_name }} {{ thread.second_person.last_name }}</p>
+                    {% else %}
+                        <img src="{{ thread.first_person.profile.profile_pic.url }}" alt="">
+                        <p>{{ thread.first_person.first_name }} {{ thread.first_person.last_name }}</p>
+                    {% endif %}
                   <i class="fa-regular fa-comments"></i>
                 </li>
-                <li>
-                  <img src="{% static 'images/guest-user.webp' %}" alt="">
-                  <p>Imie Nazwiskooo</p>
-                  <i class="fa-regular fa-comments"></i>
-                </li>
-                <li>
-                  <img src="{% static 'images/guest-user.webp' %}" alt="">
-                  <p>Imie Nazwisko</p>
-                  <i class="fa-regular fa-comments"></i>
-                </li>
-                <li>
-                  <img src="{% static 'images/guest-user.webp' %}" alt="">
-                  <p>Imie Nazwisko</p>
-                  <i class="fa-regular fa-comments"></i>
-                </li>
-                <li>
-                  <img src="{% static 'images/guest-user.webp' %}" alt="">
-                  <p>Imie Nazwisko</p>
-                  <i class="fa-regular fa-comments"></i>
-                </li>
-                <li>
-                  <img src="{% static 'images/guest-user.webp' %}" alt="">
-                  <p>Imie Nazwisko</p>
-                  <i class="fa-regular fa-comments"></i>
-                </li>
-                <li>
-                  <img src="{% static 'images/guest-user.webp' %}" alt="">
-                  <p>Imie Nazwisko</p>
-                  <i class="fa-regular fa-comments"></i>
-                </li>
-                <li>
-                  <img src="{% static 'images/guest-user.webp' %}" alt="">
-                  <p>Imie Nazwisko</p>
-                  <i class="fa-regular fa-comments"></i>
-                </li>
-                <li>
-                  <img src="{% static 'images/guest-user.webp' %}" alt="">
-                  <p>Imie Nazwisko</p>
-                  <i class="fa-regular fa-comments"></i>
-                </li>
+                {% endfor %}
               </ul>
             </div>
-            <div class="chat">
-              <div class="my_1">
-                <div class="recipent_message">
-                    <img src="{% static 'images/guest-user.webp' %}" alt="">
-                    <div class="message_content">
-                        <h6>Imie Nazwisko</h6>
-                        <div class="message">
-                            <p>blaladlasidjadsddssdd</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="my_message">
+            {% for thread in Threads %}
+            <div  class="chat {% if forloop.first %}hide is_active{% else %}hide{% endif %}"
+              chat-id="chat_{{ thread.id }}"
+              other-user-id="
+                                        {% if thread.first_person == user %}
+                                            {{ thread.second_person.id }}
+                                        {% else %}
+                                            {{ thread.first_person.id }}
+                                        {% endif %}
+                                    ">
+              <div class="my_1 msg_card_body">
+                {% for chat in thread.chat_message_thread.all %}
+                  {% if chat.user == user %}
+                  <div class="my_message">
                   <div class="message_content">
-                      <h6>Imie Nazwisko</h6>
+                      <h6>{{ thread.first_person.first_name }} {{ thread.first_person.last_name }}</h6>
                       <div class="message">
-                          <p>blaladlasidjadsddssddsfdddddddddddddddddddddgfdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaada</p>
+                          <p>{{ chat.message }}</p>
                       </div>
                   </div>
-                  <img src="{% static 'images/guest-user.webp' %}" alt="">
-              </div>
-                <div class="recipent_message">
-                    <img src="{% static 'images/guest-user.webp' %}" alt="">
+                  <img src="{{ thread.first_person.profile.profile_pic.url }}" alt="">
+                  </div>
+                  {% else %}
+                   <div class="recipent_message">
+                    <img src="{{ thread.second_person.profile.profile_pic.url }}" alt="">
                     <div class="message_content">
-                        <h6>Imie Nazwisko</h6>
+                        <h6>{{ thread.second_person.first_name }} {{ thread.second_person.last_name }}</h6>
                         <div class="message">
-                            <p>blaladlasidjadsddssddsfdddddddddddddddddddddda</p>
+                            <p>{{ chat.message }}</p>
                         </div>
                     </div>
-                </div>
-                <div class="recipent_message">
-                    <img src="{% static 'images/guest-user.webp' %}" alt="">
-                    <div class="message_content">
-                        <h6>Imie Nazwisko</h6>
-                        <div class="message">
-                            <p>blaladlasidjadsddssddsfdddddddddddddddddddddgfdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaada</p>
-                        </div>
-                    </div>
-                </div>
+                   </div>
+                  {% endif %}
+                  {% endfor %}
               </div>
               <div class="send_message">
-                <form action="">
-                  <input type="text" placeholder="Wyslij wiadomosc" >
+                <form action="" id="send_message_form">
+                  <input type="text" name id="input_messages" placeholder="Wyslij wiadomosc" >
                   <i class="fa-regular fa-paper-plane" ></i>
                 </form>
               </div>
             </div>
+            {% endfor %}
         </div>
       </section>
 {% endblock %}

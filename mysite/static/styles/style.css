@@ -109,8 +109,8 @@ header .btn:hover a {
 }
 
 .user_data img {
-    max-width: 50px;
-    max-height: 50px;
+    height: 3rem;
+    width: 3rem;
     border-radius: 50%;
     border: solid 2px white
 }
