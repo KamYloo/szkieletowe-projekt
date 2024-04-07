@@ -51,18 +51,18 @@
                   {% if chat.user == user %}
                   <div class="my_message">
                   <div class="message_content">
-                      <h6>{{ thread.first_person.first_name }} {{ thread.first_person.last_name }}</h6>
+                      <h6>{{ chat.user.first_name }} {{ chat.user.last_name }}</h6>
                       <div class="message">
                           <p>{{ chat.message }}</p>
                       </div>
                   </div>
-                  <img src="{{ thread.first_person.profile.profile_pic.url }}" alt="">
+                  <img src="{{ chat.user.profile.profile_pic.url }}" alt="">
                   </div>
                   {% else %}
                    <div class="recipent_message">
-                    <img src="{{ thread.second_person.profile.profile_pic.url }}" alt="">
+                    <img src="{{ chat.user.profile.profile_pic.url }}" alt="">
                     <div class="message_content">
-                        <h6>{{ thread.second_person.first_name }} {{ thread.second_person.last_name }}</h6>
+                        <h6>{{ chat.user.first_name }} {{ chat.user.last_name }}</h6>
                         <div class="message">
                             <p>{{ chat.message }}</p>
                         </div>
