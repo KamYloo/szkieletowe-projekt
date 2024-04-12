@@ -42,7 +42,8 @@ socket.onmessage = async function(e){
     let message = data['message']
     let send_by_id = data['send_by']
     let thread_id = data['thread_id']
-    newMessage(message, send_by_id, thread_id)
+    let userData = data['user_data'];
+    newMessage(message, send_by_id, thread_id, userData)
 }
 
 socket.onerror = async function(e){
@@ -54,7 +55,7 @@ socket.onclose = async function(e){
 }
 
 
-function newMessage(message, send_by_id, thread_id) {
+function newMessage(message, send_by_id, thread_id, userData) {
 	if ($.trim(message) === '') {
 		return false;
 	}
@@ -64,21 +65,21 @@ function newMessage(message, send_by_id, thread_id) {
         message_element = `
 			<div class="my_message">
                   <div class="message_content">
-                      <h6>Imie Nazwisko</h6>
+                      <h6>${userData.first_name} ${userData.last_name}</h6>
                       <div class="message">
                           <p>${message}</p>
                       </div>
                   </div>
-                  <img src="{{ user.profile.profile_pic.url }}" alt="">
+                  <img src="${userData.profile_picture}" alt="">
               </div>
 	    `
     }
     else {
         message_element = `
 			 <div class="recipent_message">
-                    <img src="{% static 'images/guest-user.webp' %}" alt="">
+                    <img src="${userData.profile_picture}" alt="">
                     <div class="message_content">
-                        <h6>Imie Nazwisko</h6>
+                        <h6>${userData.first_name} ${userData.last_name}</h6>
                         <div class="message">
                             <p>${message}</p>
                         </div>

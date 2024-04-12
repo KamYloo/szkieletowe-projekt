@@ -53,6 +53,11 @@ class ChatConsumer(AsyncConsumer):
             'message': msg,
             'send_by': self_user.id,
             'thread_id': thread_id,
+            'user_data': {
+                'first_name': send_by_user.first_name,
+                'last_name': send_by_user.last_name,
+                'profile_picture': send_by_user.profile.profile_pic.url
+            }
         }
 
         await self.channel_layer.group_send(
@@ -84,12 +89,11 @@ class ChatConsumer(AsyncConsumer):
 
     @database_sync_to_async
     def get_user_object(self, user_id):
-        q = User.objects.filter(id=user_id)
-        if q.exists():
-            obj = q.first()
-        else:
-            obj = None
-        return obj
+        try:
+            user = User.objects.select_related('profile').get(id=user_id)
+            return user
+        except User.DoesNotExist:
+            return None
 
     @database_sync_to_async
     def get_thread(self, thread_id):
