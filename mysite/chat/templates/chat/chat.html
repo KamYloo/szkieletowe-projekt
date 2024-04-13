@@ -11,13 +11,15 @@
 
         <div class="chat_box">
             <div class="user_list">
-              <form class="search_course" method="GET" action="#">
+              <form class="search_course" id="search_form" method="GET" action="#">
+                  {% csrf_token %}
                 <label>
-                  <input name="#" placeholder="Search person" />
+                  <input type="text" id="search_thread_input" placeholder="Search person" />
                   <ion-icon class="fa-solid fa-magnifying-glass"></ion-icon>
                 </label>
               </form>
-
+                <div class="list_to_search not-visible" id="results_box">
+              </div>
               <ul class="contacts">
                 {% for thread in Threads %}
                 <li class="{% if forloop.first %}active{% endif %} contact-li"
@@ -32,10 +34,12 @@
                         <p>{{ thread.first_person.first_name }} {{ thread.first_person.last_name }}</p>
                     {% endif %}
                   <i class="fa-regular fa-comments"></i>
+                <a class="delete_thread" href="{% url 'delete_thread' thread.id %}"><i class="fa-solid fa-user-xmark"></i></a>
                 </li>
                 {% endfor %}
               </ul>
             </div>
+            <div class="chat_box_b">
             {% for thread in Threads %}
             <div  class="chat {% if forloop.first %}hide is_active{% else %}hide{% endif %}"
               chat-id="chat_{{ thread.id }}"
@@ -71,14 +75,18 @@
                   {% endif %}
                   {% endfor %}
               </div>
-              <div class="send_message">
+
+            </div>
+            {% endfor %}
+            <div class="send_message">
                 <form action="" id="send_message_form">
                   <input type="text" name id="input_messages" placeholder="Wyslij wiadomosc" >
                   <i class="fa-regular fa-paper-plane" ></i>
                 </form>
               </div>
             </div>
-            {% endfor %}
         </div>
       </section>
+    <script src="{% static 'js/live_search_users.js' %}"></script>
+
 {% endblock %}

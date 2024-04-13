@@ -547,7 +547,7 @@ input[type="file"].custom-file-input {
 }
 
 .recipent_message img,
-.my_message img , .chat_box ul li img{
+.my_message img , .chat_box ul li img, .list_to_search a img{
   height: 3rem;
   width: 3rem;
   border-radius: 50%;
@@ -588,6 +588,7 @@ input[type="file"].custom-file-input {
 .send_message {
   height: 5rem;
   width: 68rem;
+  border-left: solid 2px black;
 }
 
 .send_message form {
@@ -623,7 +624,7 @@ input[type="file"].custom-file-input {
   overflow-y: auto;
   height: 37.5rem;
 }
-.user_list .contacts li {
+.user_list .contacts li, .list_to_search a{
   background: white;
   border-radius: 15px;
   display: flex;
@@ -635,11 +636,11 @@ input[type="file"].custom-file-input {
   border: solid 2px black;
 }
 
-.user_list .contacts li:hover {
+.user_list .contacts li:hover , .list_to_search a:hover{
   background: var(--color-main-light);
 }
 
-.user_list .contacts li p {
+.user_list .contacts li p, .list_to_search a p{
   margin: 0 1rem;
   font-size: 18px;
   font-weight: 500;
@@ -652,7 +653,7 @@ input[type="file"].custom-file-input {
   display: none;
 }
 
-.user_list .contacts li i {
+.user_list .contacts li i , .list_to_search a i, .delete_thread i{
   background-color: var(--color-main);
   font-size: 14px;
   border-radius: 50%;
@@ -665,4 +666,18 @@ input[type="file"].custom-file-input {
 }
 .is_active {
   display: block !important;
+}
+
+.list_to_search {
+  position: absolute;
+  margin-top: 0.2rem;
+  border-radius: 8px;
+  height: 30rem;
+  width: 22rem;
+  overflow-y: auto;
+  background-color: var(--color-blue);
+}
+
+.not-visible {
+  display: none;
 }

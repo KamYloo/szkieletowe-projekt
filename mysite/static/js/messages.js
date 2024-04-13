@@ -3,6 +3,8 @@ let message_body = $('.msg_card_body')
 let send_message_form = $('#send_message_form')
 const USER_ID = $('#logged_in_user').val()
 
+
+
 let loc = window.location
 let wsStart = 'ws://'
 if(loc.protocol === 'https') {
@@ -118,3 +120,4 @@ function get_active_thread_id(){
     let thread_id = chat_id.replace('chat_', '')
     return thread_id
 }
+
