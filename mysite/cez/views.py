@@ -56,20 +56,20 @@ def create_assignments(request, course_id, topic_id):
 def submit_assignment(request, assignment_id):
     try:
         assignment = Assignment.objects.get(pk=assignment_id)
-        submission_instance = Submission.objects.filter(assignment=assignment, student=request.user.profile).first()
+        submission_instance = Submission.objects.filter(assignment_id=assignment.id, student=request.user).first()
     except Assignment.DoesNotExist:
         messages.error(request, 'Assignment does not exist')
         return redirect('index')
 
-    grade = None
+    grade = 0
     if submission_instance:
-        grade = RateSubmission.objects.filter(submission_id=submission_instance.id).first()
+        grade = RateSubmission.objects.filter(assignment_id=assignment_id, student_id=request.user.id).first()
 
     if request.method == 'POST':
         form = SubmissionForm(request.POST, request.FILES, instance=submission_instance)
         if form.is_valid():
             form.instance.assignment = assignment
-            form.instance.student = request.user.profile
+            form.instance.student = request.user
             form.save()
             messages.success(request, 'Your answer has been submitted!')
             return redirect('assignment-submit', assignment_id)
@@ -192,7 +192,7 @@ def course_detail(request, course_id):
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def rate_assignment(request, course_id, assignment_id):
     assignment = Assignment.objects.get(pk=assignment_id)
-    submissions = Submission.objects.filter(assignment_id=assignment_id)
+    submissions = Submission.objects.filter(assignment__id=assignment.id)
     return render(request, 'cez/rate_assignment.html', {'assignment': assignment,'submissions': submissions, 'course_id': course_id})
 
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
@@ -200,7 +200,9 @@ def rate_users_assignment(request, course_id, assignment_id, submission_id):
     submission = get_object_or_404(Submission, pk=submission_id)
 
     try:
-        existing_rating = RateSubmission.objects.get(submission=submission, teacher=request.user.profile)
+        existing_rating = RateSubmission.objects.get(assignment_id=assignment_id,
+                                                     teacher=request.user.profile,
+                                                     student_id=submission.student.pk)
     except RateSubmission.DoesNotExist:
         existing_rating = None
 
@@ -212,7 +214,8 @@ def rate_users_assignment(request, course_id, assignment_id, submission_id):
 
         if form.is_valid():
             form.instance.teacher = request.user.profile
-            form.instance.submission = submission
+            form.instance.student = submission.student
+            form.instance.assignment = Assignment.objects.get(pk=assignment_id)
             form.save()
             return redirect('assignment-rate', course_id=course_id, assignment_id=assignment_id)
     else:

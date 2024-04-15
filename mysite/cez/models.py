@@ -38,8 +38,8 @@ class Assignment(models.Model):
         return f"{self.title}"
 
 class Submission(models.Model):
-    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
-    student = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, null=True)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
     submission_date = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to='temp')
 
@@ -57,8 +57,9 @@ class Submission(models.Model):
         return f"Answer submitted by {self.student} to {self.assignment}"
 
 class RateSubmission(models.Model):
-    submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, null=True)
     teacher = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
     grade = models.FloatField(default=0)
     comment = models.CharField(max_length=1024)
 
@@ -81,7 +82,7 @@ class Course(models.Model):
    semester = models.ForeignKey(Semester, on_delete=models.CASCADE, default=1)
    degree = models.ForeignKey(Degree, on_delete=models.CASCADE, default=1)
    image = models.ImageField(upload_to='course_images/', blank=True, null=True, default="course_images/default_course.jpg")
-   access_key = models.CharField(max_length=50, unique=True)
+   access_key = models.CharField(max_length=50)
    def __str__(self):
        return self.title
 
