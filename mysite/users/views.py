@@ -10,7 +10,9 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
-from cez.models import Course, Enrollment
+from .models import Profile
+from django.db.models import Q
+from cez.models import Course, Enrollment, Topic, Assignment, RateSubmission, Submission
 
 from django.http import HttpResponse
 
@@ -68,6 +70,27 @@ def profile(request):
     enrollments = Enrollment.objects.filter(student_id=request.user).values_list('course_id', flat=True)
     course = Course.objects.filter(pk__in=enrollments)
     return render(request, 'users/profile.html', {'courses': course})
+
+@login_required
+def degrees(request):
+    enrollments = Enrollment.objects.filter(student_id=request.user).values_list('course_id', flat=True)
+    course = Course.objects.filter(pk__in=enrollments)
+    return render(request, 'users/degrees.html', {'courses': course})
+
+@login_required
+def degrees_course(request, course_id):
+    topics = Topic.objects.filter(course=course_id)
+    assignments = Assignment.objects.filter(topic__in=topics)
+    prof = Profile.objects.get(user_id=request.user.id)
+    submission = Submission.objects.filter(Q(student_id=prof.id) & Q(assignment__in=assignments))
+
+    # gradees = []
+    # for assignment in assignments:
+    #     gradees.append(RateSubmission.objects.filter(submission_id))
+
+    gradees = RateSubmission.objects.filter(submission_id__in=submission).values_list('grade', flat=True)
+    print(gradees)
+    return render(request, 'users/degrees_course.html', {'assignments': assignments, 'gradees': gradees})
 
 @login_required
 def update_profile(request):

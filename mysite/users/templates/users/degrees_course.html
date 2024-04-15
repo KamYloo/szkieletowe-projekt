@@ -1,0 +1,38 @@
+{% extends "base/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}Profil {{user.username}}{% endblock %}
+
+{% block content %}
+<div class="degrees_profile">
+    <img src="{{ user.profile.profile_pic.url }}" alt="profile picture">
+    <div>
+      <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+      <h3>{{ user.username }}</h3>
+    </div>
+    
+</div>
+
+<section class="user-degrees-courses">
+  <h3>Courses you attend</h3>
+  <div class="course-degrees-block">
+    <p class="degrees_course_name">Course name</p>
+    <p class="degrees_course_degrees">Grade</p>
+  </div>
+  
+  <ul>
+    {% for assignment in assignments %}
+    <a href="{% url 'assignment-submit' assignment.id %}">
+        <li class="course-degrees-block">
+            <p class="degrees_course_name">{{ assignment.title }}</p> 
+            <p class="degrees_course_degrees">5</p>
+        </li>
+    </a>
+    {% endfor %}
+  </ul>
+  
+    
+  
+</section>
+
+{% endblock content %}
