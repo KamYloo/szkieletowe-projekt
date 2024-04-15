@@ -33,7 +33,6 @@ def courses(request):
         if semester_id != None:
             query &= Q(semester_id=semester_id)
         courses = Course.objects.filter(query)
-
     return render(request, 'cez/courses.html', {'courses': courses, 'title': title})
 
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
@@ -91,6 +90,13 @@ def create_course(request):
     else:
         form = CourseForm()
     return render(request, 'cez/create_course_form.html', {'form': form})
+
+@login_required
+def delete_course(request, course_id):
+    course = Course.objects.get(pk=course_id)
+    course.delete()
+    messages.success(request, "Deleted course")
+    return redirect('courses')
 
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def update_assignment(request, course_id, assignment_id):
