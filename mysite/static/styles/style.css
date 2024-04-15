@@ -589,10 +589,29 @@ header .btn:hover a {
   justify-content: center;
   margin-top: 30px;
   gap: 38px;
+    margin-bottom: 2rem;
+}
+
+.courses_list .course .fa-solid.fa-xmark {
+    position: absolute;
+    right: 1rem;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.courses_list .course .delete_course {
+    text-decoration: none;
+    color: black;
+    transition: all 0.3s ease-in-out;
+}
+
+.courses_list .course .delete_course:hover {
+    color: red;
 }
 
 .courses_list .course {
-  max-width: 400px;
+  position: relative;
+  width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -608,8 +627,8 @@ header .btn:hover a {
 }
 
 .course img {
-  max-width: 300px;
-    max-height: 200px;
+  width: 300px;
+  height: 200px;
   border-radius: 20px;
 }
 

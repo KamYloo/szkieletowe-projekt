@@ -93,6 +93,9 @@
       <section class="courses_list">
         {% for course in courses %}
         <div class="course">
+            {% if request.user.id == course.teacher.id %}
+            <a class="delete_course" href="{% url 'delete_course' course.id %}"><i class="fa-solid fa-xmark"></i></a>
+            {% endif %}
           <img src="{{course.image.url}}" alt="" />
           <p class="tittle">{{ course.title }}</p>
           <p class="description">
