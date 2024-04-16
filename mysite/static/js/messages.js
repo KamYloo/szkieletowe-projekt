@@ -1,3 +1,9 @@
+// Bind click event to the "i" icon
+$('.fa-paper-plane').on('click', function() {
+    // Trigger form submission
+    $('#send_message_form').submit();
+});
+
 let input_message = $('#input_messages')
 let message_body = $('.msg_card_body')
 let send_message_form = $('#send_message_form')

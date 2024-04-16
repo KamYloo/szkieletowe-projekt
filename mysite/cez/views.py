@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from .models import Course ,Enrollment
 from .models import Assignment, Submission, Topic, File, RateSubmission
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
@@ -13,9 +14,16 @@ from django.db.models import Q
 # Create your views here.
 
 def index(request):
+    num_courses = Course.objects.count()
+    num_users = User.objects.count()
+    num_topics = Topic.objects.count()
     context = {
-        'is_homepage': True
+        'is_homepage': True,
+        'num_courses': num_courses,
+        'num_users': num_users,
+        'num_topics': num_topics
     }
+
     return render(request, 'cez/index.html', context)
 
 def courses(request):

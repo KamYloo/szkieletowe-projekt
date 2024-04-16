@@ -1,8 +1,0 @@
-{% extends "../base/base.html" %}
-{% load static %}
-{% block content %}
-    <h1>Participants</h1>
-    {% for participant in participants %}
-        <h3>{{participant.student.first_name}} {{participant.student.last_name}}</h3>
-    {% endfor %}
-{% endblock %}
