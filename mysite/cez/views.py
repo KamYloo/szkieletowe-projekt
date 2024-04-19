@@ -1,3 +1,6 @@
+import logging
+from datetime import datetime
+
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
@@ -12,11 +15,14 @@ from django.forms import modelformset_factory
 from django.db.models import Q
 # Create your views here.
 
+logger = logging.getLogger(__name__)
+
 def index(request):
     context = {
         'is_homepage': True
     }
     return render(request, 'cez/index.html', context)
+
 
 def courses(request):
     title = request.GET.get("title")
@@ -35,6 +41,7 @@ def courses(request):
         courses = Course.objects.filter(query)
     return render(request, 'cez/courses.html', {'courses': courses, 'title': title})
 
+
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def create_assignments(request, course_id, topic_id):
     topic = Topic.objects.get(pk=topic_id)
@@ -46,10 +53,12 @@ def create_assignments(request, course_id, topic_id):
             topic.assignments.add(assignment)
             assignment.save()
             topic.save()
+            logger.info(f'Assignment has been created successfully by {request.user}.')
             return redirect('course_detail', course_id)
     else:
         form = AssignmentForm()
     return render(request, 'cez/create_assignment.html', {'form': form, 'topic': topic})
+
 
 @login_required
 def submit_assignment(request, assignment_id):
@@ -71,6 +80,7 @@ def submit_assignment(request, assignment_id):
             form.instance.student = request.user
             form.save()
             messages.success(request, 'Your answer has been submitted!')
+            logger.info(f'User {request.user} submitted assignment {assignment}.')
             return redirect('assignment-submit', assignment_id)
     else:
         form = SubmissionForm(instance=submission_instance)
@@ -79,6 +89,7 @@ def submit_assignment(request, assignment_id):
 
 
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def create_course(request):
     if request.method == 'POST':
         form = CourseForm(request.POST, request.FILES)
@@ -86,17 +97,24 @@ def create_course(request):
             course = form.save(commit=False)
             course.teacher = request.user.profile
             course.save()
+            enrollment = Enrollment.objects.create(student=request.user, course=course)
+            enrollment.save()
+            logger.info(f'User {request.user} created course {course}.')
             return redirect('courses')
     else:
         form = CourseForm()
     return render(request, 'cez/create_course_form.html', {'form': form})
 
+
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def delete_course(request, course_id):
     course = Course.objects.get(pk=course_id)
     course.delete()
     messages.success(request, "Deleted course")
+    logger.info(f'User {request.user} deleted course {course}.')
     return redirect('courses')
+
 
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def update_assignment(request, course_id, assignment_id):
@@ -104,20 +122,24 @@ def update_assignment(request, course_id, assignment_id):
         assignment = Assignment.objects.get(pk=assignment_id)
     except Assignment.DoesNotExist:
         messages.error(request, 'Assignment does not exist')
+        logger.info(f'User {request.user} tried to update assignment which does not exist.')
         return redirect('assignment')
     if request.method == 'POST':
         form = AssignmentUpdateForm(request.POST, request.FILES, instance=assignment)
         if form.is_valid():
             form.save()
             messages.success(request, 'Your have updated the assignment')
+            logger.info(f'User {request.user} updated assignment {assignment}.')
             return redirect('course_detail', course_id)
     else:
         form = AssignmentUpdateForm(instance=assignment)
     return render(request, 'cez/update_assignment.html', {'form': form, 'assignment':assignment})
 
+
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def remove_assignment(request, course_id, assignment_id):
     assignment = Assignment.objects.get(pk=assignment_id)
+    logger.info(f'User {request.user} deleted assignment {assignment}.')
     assignment.delete()
     messages.success(request, "Deleted assignment")
     return redirect('course_detail', course_id)
@@ -136,25 +158,34 @@ def enroll_to_course(request, course_id):
                 if access_key == course.access_key:
                     enrollment = Enrollment.objects.create(student=request.user, course=course)
                     enrollment.save()
+                    logger.info(f'User {request.user} enrolled in course {course} at {datetime.now()}')
                     return redirect('course_detail', course_id=course.id)
                 else:
+                    logger.info(
+                        f'User {request.user} tried to enrolled in course {course} but the password was invalid.'
+                    )
                     form.add_error(None, 'Invalid access key')
         else:
             form = AccessKeyForm()
         return render(request, 'cez/enroll_to_course.html', {'form': form, 'participants': participants})
     return redirect('course_detail', course_id=course_id)
 
+
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def update_topic(request, course_id, topic_id):
     try:
         topic = Topic.objects.get(pk=topic_id)
     except Topic.DoesNotExist:
+        logger.info(
+            f'User {request.user} tried to update topic of id {topic_id} but it does not exist.'
+        )
         messages.error(request, 'Topic does not exist')
         return redirect('topic')
     if request.method == 'POST':
         form = TopicUpdateForm(request.POST, instance=topic)
         if form.is_valid():
             form.save()
+            logger.info(f'User {request.user} update topic {topic}.')
             messages.success(request, 'Topic updated')
             return redirect('course_detail', course_id)
     else:
@@ -223,6 +254,7 @@ def rate_users_assignment(request, course_id, assignment_id, submission_id):
             form.instance.student = submission.student
             form.instance.assignment = Assignment.objects.get(pk=assignment_id)
             form.save()
+            logger.info(f'User {request.user} has rated assignment of id {assignment_id} and submission id {submission_id}.')
             return redirect('assignment-rate', course_id=course_id, assignment_id=assignment_id)
     else:
         form = RateSubmissionForm(instance=existing_rating)
@@ -239,6 +271,7 @@ def add_topic(request, course_id):
             topic.save()
             course.topics.add(topic)
             messages.success(request, 'Topic added')
+            logger.info(f'User {request.user} added topic {topic}.')
             return redirect('course_detail', course_id)
     else:
         form = TopicForm()
@@ -250,7 +283,9 @@ def delete_topic(request, course_id, topic_id):
         topic = Topic.objects.get(id=topic_id)
         topic.delete()
         messages.success(request, "Deleted topic")
+        logger.info(f'User {request.user} has deleted topic {topic}.')
         return redirect('course_detail', course_id=course_id)
     except Topic.DoesNotExist:
         messages.error(request,"Topic does not exist.")
+        logger.info(f'User {request.user} tried to delete topic of id {topic_id} but it does not exist.')
         return redirect('course_detail', course_id=course_id)

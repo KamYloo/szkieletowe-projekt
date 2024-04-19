@@ -20,7 +20,3 @@ urlpatterns = [
     path('course/<int:course_id>/deletefile/<str:file_id>/', views.delete_file, name='delete-file'),
     path('assignment/<int:assignment_id>/', views.submit_assignment, name='assignment-submit'),
 ]
-
-
-
-
