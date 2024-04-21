@@ -14,18 +14,18 @@
 </div>
 
 <section class="user-degrees-courses">
-  <h3>Courses you attend</h3>
+  <h3>Assignments</h3>
   <div class="course-degrees-block">
-    <p class="degrees_course_name">Course name</p>
+    <p class="degrees_course_name">Assignment</p>
     <p class="degrees_course_degrees">Grade</p>
   </div>
   
   <ul>
-    {% for assignment in assignments %}
-    <a href="{% url 'assignment-submit' assignment.id %}">
+    {% for map in maps %}
+    <a href="{% url 'assignment-submit' map.0.id %}">
         <li class="course-degrees-block">
-            <p class="degrees_course_name">{{ assignment.title }}</p> 
-            <p class="degrees_course_degrees">5</p>
+            <p class="degrees_course_name">{{ map.0 }}</p>
+            <p class="degrees_course_degrees">{% if map.1%}{{ map.1 }}{% else %}-{% endif %}</p>
         </li>
     </a>
     {% endfor %}

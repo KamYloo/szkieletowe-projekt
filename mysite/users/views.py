@@ -84,13 +84,36 @@ def degrees_course(request, course_id):
     prof = Profile.objects.get(user_id=request.user.id)
     submission = Submission.objects.filter(Q(student_id=prof.id) & Q(assignment__in=assignments))
 
+    # mapping = {}
+    # for assignment in assignments:
+    #     rateSubmission = RateSubmission.objects.filter(assignment_id=assignment.id,
+    #                                                               student_id=request.user.id).first()
+    #     grade = None
+    #     try:
+    #         grade = rateSubmission.grade
+    #     except:
+    #         pass
+    #     mapping[assignment.title] = grade
+    #
+    # print(mapping)
+    mapping = []
+
+    for assignment in assignments:
+        rateSubmission = RateSubmission.objects.filter(assignment_id=assignment.id,
+                                                                      student_id=request.user.id).first()
+        grade = None
+        try:
+            grade = rateSubmission.grade
+        except:
+            pass
+        mapping.append((assignment, grade))
+
     # gradees = []
     # for assignment in assignments:
     #     gradees.append(RateSubmission.objects.filter(submission_id))
+    #gradees = RateSubmission.objects.filter(submission_id__in=submission).values_list('grade', flat=True)
 
-    gradees = RateSubmission.objects.filter(submission_id__in=submission).values_list('grade', flat=True)
-    print(gradees)
-    return render(request, 'users/degrees_course.html', {'assignments': assignments, 'gradees': gradees})
+    return render(request, 'users/degrees_course.html', {'maps': mapping})#, 'gradees': gradees})
 
 @login_required
 def update_profile(request):
