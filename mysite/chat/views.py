@@ -42,19 +42,22 @@ def search_thread(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         res = None
         users = request.POST.get('users')
-        qs = User.objects.filter(Q(first_name__icontains=users) | Q(last_name__icontains=users))
-        if len(qs) > 0 and len(users) > 0:
-            data = []
-            for user in qs:
-                item = {
-                    'pk': user.pk,
-                    'first_name': user.first_name,
-                    'last_name': user.last_name,
-                    'avatar': user.profile.profile_pic.url
-                }
-                data.append(item)
-            res = data
+        if users is not None and users != '':
+            qs = User.objects.filter(Q(first_name__icontains=users) | Q(last_name__icontains=users))
+            if len(qs) > 0:
+                data = []
+                for user in qs:
+                    item = {
+                        'pk': user.pk,
+                        'first_name': user.first_name,
+                        'last_name': user.last_name,
+                        'avatar': user.profile.profile_pic.url
+                    }
+                    data.append(item)
+                res = data
+            else:
+                res = "No Users Found...".format(users)
         else:
-            res = 'No users found...'
+            res = []
         return JsonResponse({'data': res})
     return JsonResponse({})
