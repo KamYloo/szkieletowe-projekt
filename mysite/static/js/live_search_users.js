@@ -20,7 +20,7 @@ const sendSearchData = (users) => {
                 data.forEach(users => {
                     resultsBox.innerHTML += `
                     <ul>
-                      <a href="${url}${users.pk}">
+                      <a href="${url}create_thread/${users.pk}/">
                         <img src="${users.avatar}" alt="">
                         <p>${users.first_name} ${users.last_name}</p>
                       </a>
