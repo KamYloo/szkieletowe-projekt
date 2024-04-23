@@ -2,9 +2,11 @@ import logging
 from datetime import datetime
 
 from django.shortcuts import render,redirect,get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth.forms import UserCreationForm
-from .models import Course ,Enrollment
+from django.urls import reverse
+
+from .models import Course, Enrollment, CourseFile
 from .models import Assignment, Submission, Topic, File, RateSubmission
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
@@ -18,10 +20,10 @@ from django.db.models import Q
 logger = logging.getLogger(__name__)
 
 def index(request):
-    context = {
-        'is_homepage': True
-    }
-    return render(request, 'cez/index.html', context)
+    # context = {
+    #     'is_homepage': True
+    # }
+    return render(request, 'cez/index.html') # , context
 
 
 def courses(request):
@@ -48,13 +50,14 @@ def create_assignments(request, course_id, topic_id):
     if request.method == 'POST':
         form = AssignmentForm(request.POST, request.FILES)
         if form.is_valid():
-            assignment = form.save()
+            assignment = form.save(commit=False)
+            assignment.save()
             assignment.topics.add(topic)
             topic.assignments.add(assignment)
-            assignment.save()
             topic.save()
+            messages.success(request, 'Assignment has been created successfully!')
             logger.info(f'Assignment has been created successfully by {request.user}.')
-            return redirect('course_detail', course_id)
+            return redirect('course_detail', course_id=course_id)
     else:
         form = AssignmentForm()
     return render(request, 'cez/create_assignment.html', {'form': form, 'topic': topic})
@@ -170,7 +173,6 @@ def enroll_to_course(request, course_id):
         return render(request, 'cez/enroll_to_course.html', {'form': form, 'participants': participants})
     return redirect('course_detail', course_id=course_id)
 
-
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def update_topic(request, course_id, topic_id):
     try:
@@ -180,7 +182,7 @@ def update_topic(request, course_id, topic_id):
             f'User {request.user} tried to update topic of id {topic_id} but it does not exist.'
         )
         messages.error(request, 'Topic does not exist')
-        return redirect('topic')
+        return redirect('course_detail', course_id)
     if request.method == 'POST':
         form = TopicUpdateForm(request.POST, instance=topic)
         if form.is_valid():
@@ -198,7 +200,7 @@ def add_file(request, course_id, topic_id):
         topic = Topic.objects.get(pk=topic_id)
     except Topic.DoesNotExist:
         messages.error(request, 'Topic does not exist')
-        return redirect('topic')
+        return redirect('course_detail', course_id)
     if request.method == 'POST':
         form = CourseFileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -213,7 +215,7 @@ def add_file(request, course_id, topic_id):
 
 @user_passes_test(lambda u: u.groups.filter(name='Nauczyciel').exists())
 def delete_file(request, course_id, file_id):
-    file = File.objects.get(pk=file_id)
+    file = CourseFile.objects.get(pk=file_id)
     file.file.delete()
     file.delete()
     messages.success(request, "Deleted file")

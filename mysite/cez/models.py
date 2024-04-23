@@ -86,8 +86,8 @@ class Course(models.Model):
    def __str__(self):
        return self.title
 
-   def save(self):
-       super().save()
+   def save(self, *args, **kwargs):
+       super(Course, self).save(*args, **kwargs)
 
        img = Image.open(self.image.path)
 
