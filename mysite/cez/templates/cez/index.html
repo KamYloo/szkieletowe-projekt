@@ -36,23 +36,24 @@
           </div>
         </div>
       </section>
-      <div class="numbers_web">
+ {% if is_homepage %}
+        <div class="numbers_web">
       <h2>Trochę Liczb:</h2>
       <div class="static">
         <i class="fa-solid fa-users-line"></i>
-        <h6>400</h6>
+        <h6>{{num_users}}</h6>
         <hr>
         <p>Uzytkownikow</p>
       </div>
       <div class="static">
         <i class="fa-solid fa-graduation-cap"></i>
-        <h6>400</h6>
+        <h6>{{num_courses}}</h6>
         <hr>
         <p>Kursów</p>
       </div>
       <div class="static">
         <i class="fa-solid fa-person-chalkboard"></i>
-        <h6>400</h6>
+        <h6>{{num_topics}}</h6>
         <hr>
         <p>Tematów</p>
       </div>
@@ -77,4 +78,5 @@
         </a>
       </div>
     </div>
+    {% endif %}
 {% endblock %}
