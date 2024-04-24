@@ -1,61 +1,63 @@
 {% load static %}
 
-    <header>
-            <div class="logo">
-                <img src="{% static 'images/logo.png' %}" alt="">
-                <h2><a href="{% url 'index' %}">SkillForge</a></h2>
-            </div>
-            <nav>
-                <ul>
-                    <li class="active"><a href="{% url 'index' %}">Home</a></li>
-                    <li><a href="{% url 'courses' %}">Courses</a></li>
-                    <li><a href="{% url 'chat' %}">Chat</a></li>
-                    <li><a href="#">Help</a></li>
+<header>
+  <div class="logo">
+    <img src="{% static 'images/logo.png' %}" alt="">
+    <h2><a href="{% url 'index' %}">SkillForge</a></h2>
+  </div>
+  <nav id="nav-bar">
+    <ul>
+      <li class="active"><a href="{% url 'index' %}">Home</a></li>
+      <li><a href="{% url 'courses' %}">Courses</a></li>
+      <li><a href="{% url 'chat' %}">Chat</a></li>
+      <li><a href="#">Help</a></li>
 
-                </ul>
-            </nav>
-             {% if request.user.is_authenticated %}
-            <div class="user_data">
-                <input type="hidden" id="logged_in_user" value="{{ user.id }}" />
-              <img src="{{ user.profile.profile_pic.url }}" alt="">
-              <div class="user_data_name">
-                <h2>{{user.first_name}} {{user.last_name}}</h2>
-                <p>{{user.groups}}</p>
-              </div>
-              <div class="menu">
-                <svg  onclick="toggleMenu()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-                </svg>
-              </div>
-                <div class="sub_menu_wrap" id="subMenu">
-            <div class="sub_menu">
-              <div class="user_info">
-                <img src="{{ user.profile.profile_pic.url }}" alt="" />
-                <h6>Rollaaaaa</h6>
-              </div>
-              <hr />
-              <a href="{% url 'profile' %}" class="sub_menu_link">
-                <i class="fa-regular fa-user"></i>
-                <p>Profile</p>
-                <i class="fa-solid fa-arrow-right"></i>
-                <span></span>
-              </a>
-              <a href="{% url 'degrees' %}" class="sub_menu_link">
-                <i class="fa-solid fa-book-open"></i>
-                <p>Degrees</p>
-                <i class="fa-solid fa-arrow-right"></i>
-                <span></span>
-              </a>
-              <a href="{% url 'logout' %}" class="sub_menu_link">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <p>Logout</p>
-                <i class="fa-solid fa-arrow-right"></i>
-                <span></span>
-              </a>
-            </div>
-          </div>
-              </div>
-         {% else %}
-        <li class="btn"><a href="{% url 'login' %}">Login</a></li>
-           {% endif %}
-        </header>
+    </ul>
+  </nav>
+  {% if request.user.is_authenticated %}
+  <div class="user_data">
+    <input type="hidden" id="logged_in_user" value="{{ user.id }}" />
+    <img src="{{ user.profile.profile_pic.url }}" alt="">
+    <div class="user_data_name">
+      <h2>{{user.first_name}} {{user.last_name}}</h2>
+      <p>{{user.groups}}</p>
+    </div>
+    <div class="menu">
+      <svg onclick="toggleMenu()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+        class="bi bi-list" viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+      </svg>
+    </div>
+    <div class="sub_menu_wrap" id="subMenu">
+      <div class="sub_menu">
+        <div class="user_info">
+          <img src="{{ user.profile.profile_pic.url }}" alt="" />
+          <h6>Rollaaaaa</h6>
+        </div>
+        <hr />
+        <a href="{% url 'profile' %}" class="sub_menu_link">
+          <i class="fa-regular fa-user"></i>
+          <p>Profile</p>
+          <i class="fa-solid fa-arrow-right"></i>
+          <span></span>
+        </a>
+        <a href="{% url 'degrees' %}" class="sub_menu_link">
+          <i class="fa-solid fa-book-open"></i>
+          <p>Degrees</p>
+          <i class="fa-solid fa-arrow-right"></i>
+          <span></span>
+        </a>
+        <a href="{% url 'logout' %}" class="sub_menu_link">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <p>Logout</p>
+          <i class="fa-solid fa-arrow-right"></i>
+          <span></span>
+        </a>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <li class="btn"><a href="{% url 'login' %}">Login</a></li>
+  {% endif %}
+</header>
