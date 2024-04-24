@@ -3,80 +3,87 @@
 {% block title %}Glowna strona{% endblock %}
 
 {% block content %}
-      <div class="content">
-        <div class="main-text">
-          <h6>#1 Online</h6>
-          <h3>Education Platform</h3>
-          <h1>SkillForge</h1>
-          <p>
-            Dynamiczna platforma edukacyjna oferująca kursy online, które
-            pomagają rozwijać umiejętności w różnych dziedzinach. Nasze kursy są
-            starannie opracowane przez ekspertów z danej branży, aby zapewnić
-            uczestnikom najwyższą jakość nauki. Dzięki interaktywnym modułom,
-            praktycznym zadaniom i wsparciu instruktorów, uczestnicy mogą
-            zdobywać nowe umiejętności w elastyczny sposób, dostosowując naukę
-            do swojego harmonogramu. Niezależnie od tego, czy chcesz rozwinąć
-            swoje umiejętności zawodowe, zdobyć nowe hobby czy pogłębić swoją
-            wiedzę, SkillForge ma kurs dla Ciebie.
-          </p>
-          <a href="{% url 'courses' %}">Go Learn</a>
-        </div>
+<div id="content-block">
+  <div class="content">
+    <div class="main-text">
+      <h6>#1 Online</h6>
+      <h3>Education Platform</h3>
+      <h1>SkillForge</h1>
+      <p>
+        Dynamiczna platforma edukacyjna oferująca kursy online, które
+        pomagają rozwijać umiejętności w różnych dziedzinach. Nasze kursy są
+        starannie opracowane przez ekspertów z danej branży, aby zapewnić
+        uczestnikom najwyższą jakość nauki. Dzięki interaktywnym modułom,
+        praktycznym zadaniom i wsparciu instruktorów, uczestnicy mogą
+        zdobywać nowe umiejętności w elastyczny sposób, dostosowując naukę
+        do swojego harmonogramu. Niezależnie od tego, czy chcesz rozwinąć
+        swoje umiejętności zawodowe, zdobyć nowe hobby czy pogłębić swoją
+        wiedzę, SkillForge ma kurs dla Ciebie.
+      </p>
+      <a href="{% url 'courses' %}">Go Learn</a>
+    </div>
+  </div>
+  <section class="slide_container">
+    <div class="slider_wrapper">
+      <div class="slider">
+        <img id="slide_1" src="{% static 'images/slide1.png' %}" alt="">
+        <!-- <img id="slide_2" src="{% static 'images/slide2.png' %}" alt=""> -->
+        <!-- <img id="slide_3" src="{% static 'images/slide3.png' %}" alt=""> -->
       </div>
-      <section class="slide_container">
-        <div class="slider_wrapper">
-          <div class="slider">
-            <img id="slide_1" src="{% static 'images/slide1.png' %}" alt="">
-            <img id="slide_2" src="{% static 'images/slide2.png' %}" alt="">
-            <img id="slide_3" src="{% static 'images/slide3.png' %}" alt="">
-          </div>
-          <div class="slider_nav">
-            <a href="#slide_1"></a>
-            <a href="#slide_2"></a>
-            <a href="#slide_3"></a>
-          </div>
-        </div>
-      </section>
- {% if is_homepage %}
-        <div class="numbers_web">
-      <h2>Trochę Liczb:</h2>
-      <div class="static">
-        <i class="fa-solid fa-users-line"></i>
-        <h6>{{num_users}}</h6>
-        <hr>
-        <p>Uzytkownikow</p>
-      </div>
-      <div class="static">
-        <i class="fa-solid fa-graduation-cap"></i>
-        <h6>{{num_courses}}</h6>
-        <hr>
-        <p>Kursów</p>
-      </div>
-      <div class="static">
-        <i class="fa-solid fa-person-chalkboard"></i>
-        <h6>{{num_topics}}</h6>
-        <hr>
-        <p>Tematów</p>
+      <div class="slider_nav">
+        <a href="#slide_1"></a>
+        <a href="#slide_2"></a>
+        <a href="#slide_3"></a>
       </div>
     </div>
-    <div class="contact">
-        <h2>Kontakt</h2>
-      <div class="social">
-        <a href="#" class="btn">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="#" class="btn">
-          <i class="fab fa-twitter"></i>
-        </a>
-        <a href="#" class="btn">
-          <i class="fab fa-google"></i>
-        </a>
-        <a href="#" class="btn">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="#" class="btn">
-          <i class="fab fa-youtube"></i>
-        </a>
-      </div>
+  </section>
+</div>
+
+{% if is_homepage %}
+<div class="numbers_web">
+  <h2>Trochę Liczb:</h2>
+  <div class="static offset-block"></div>
+  <div class="static-block">
+    <div class="static">
+      <i class="fa-solid fa-users-line"></i>
+      <h6>{{num_users}}</h6>
+      <hr>
+      <p>Uzytkownikow</p>
     </div>
-    {% endif %}
+    <div class="static">
+      <i class="fa-solid fa-graduation-cap"></i>
+      <h6>{{num_courses}}</h6>
+      <hr>
+      <p>Kursów</p>
+    </div>
+    <div class="static">
+      <i class="fa-solid fa-person-chalkboard"></i>
+      <h6>{{num_topics}}</h6>
+      <hr>
+      <p>Tematów</p>
+    </div>
+  </div>
+  <div class="static offset-block"></div>
+</div>
+<div class="contact">
+  <h2>Kontakt</h2>
+  <div class="social">
+    <a href="#" class="btn">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="#" class="btn">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a href="#" class="btn">
+      <i class="fab fa-google"></i>
+    </a>
+    <a href="#" class="btn">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="#" class="btn">
+      <i class="fab fa-youtube"></i>
+    </a>
+  </div>
+</div>
+{% endif %}
 {% endblock %}

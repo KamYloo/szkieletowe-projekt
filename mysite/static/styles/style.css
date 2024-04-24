@@ -43,7 +43,7 @@ body {
     min-width: 60px;
   }
 
-  .layout > header > .logo > h2 {
+  .layout > header > .logo p {
     display: none;
   }
 }
@@ -78,8 +78,8 @@ body {
   align-self: right;
 }
 
-.layout header .logo h2 a{
-    display: block;
+.layout header .logo a{
+    display: flex;
     font-size: 38px;
     font-weight: 600;
     text-decoration: none;
@@ -246,16 +246,41 @@ header .btn:hover a {
   font-weight: bold;
 }
 
+#content-block{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+@media (max-width: 1000px) {
+  #content-block .content{
+    width: 100%;
+  }
+
+  #content-block .slide_container{
+    display: none;
+  }
+
+}
+
+/* #content-block .content .main-text{
+  display: flex;
+} */
 
 .content {
+  display: flex;
+  justify-content: center;
   padding-top: 60px;
-  padding: 40px 180px 30px;
+  /* padding: 40px 180px 30px; */
+  padding-left: 20px;
+  padding-right: 20px;
   width: 50%;
-  float: left;
-    max-height: 60rem;
+  /* float: left; */
+  max-height: 60rem;
 }
 
 .content .main-text {
+  /* width: 100%; */
   position: relative;
   z-index: 2;
   margin-bottom: 40px;
@@ -460,19 +485,33 @@ header .btn:hover a {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   align-items: center;
   display: flex;
-  justify-content: center
+  justify-content: center;
 }
 
+.offset-block{
+  display: none;
+  width: 15%;
+}
 
 .numbers_web h2 {
   font-weight: bold;
-    font-family: Georgia;
-    font-size: 28px;
+  font-family: Georgia;
+  font-size: 28px;
+  width: 20%;
+  position: absolute;
+  left: 40px;
 }
 
 
-.numbers_web .static {
-  padding: 0 60px;
+.numbers_web .static-block{
+  width: 40%;
+  min-width: 500px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.numbers_web .static-block .static {
+  padding: 20px 20px;
   text-align: center;
 }
 
@@ -487,6 +526,25 @@ header .btn:hover a {
 
 .numbers_web .static p {
   font-weight: 700;
+}
+
+@media (max-width: 1000px) {
+  .numbers_web{
+    justify-content: flex-start;
+  }
+
+  .numbers_web h2{
+    display: none;
+  }
+
+  .numbers_web .static-block{
+    width: 70%;
+  }
+
+  .offset-block{
+    display: block;
+    height: 100%;
+  }
 }
 
 .courses_layout {
