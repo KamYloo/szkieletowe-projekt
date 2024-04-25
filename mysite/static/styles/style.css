@@ -934,18 +934,26 @@ header .btn:hover a {
   border-radius: 5px;
   display: flex;
   width: 40%;
+  min-width: 400px;
+}
+
+.degrees_profile .degrees-profile-data{
+  font-size: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .degrees_profile>img {
   border-radius: 100%;
   margin: 10px;
-  width: 200px;
+  width: 150px;
   border: 3px solid black;
 }
 
-.degrees_profile>div {
+/* .degrees_profile>div {
   margin-top: 50px;
-}
+} */
 
 .user-degrees-courses {
   border: 4px, solid black;
