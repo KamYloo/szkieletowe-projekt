@@ -18,6 +18,19 @@ from django.http import HttpResponse
 
 # Create your views here.
 def register(request):
+    """
+        Obsługuje proces rejestracji użytkownika.
+
+        GET:
+            Wyświetla formularz rejestracji.
+
+        POST:
+            Sprawdza poprawność danych wprowadzonych do formularza rejestracji.
+            Jeśli formularz jest poprawny, tworzy nowego użytkownika, oznacza go jako nieaktywnego
+            i wysyła link aktywacyjny na podany adres email.
+            Po wysłaniu wiadomości, wyświetla komunikat informujący o konieczności potwierdzenia adresu email.
+            Przekierowuje użytkownika na stronę logowania.
+    """
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
@@ -50,6 +63,19 @@ def register(request):
     return render(request, "users/register.html", {'form': form})
 
 def activate(request, uidb64, token):
+    """
+        Aktywuje konto użytkownika na podstawie przekazanych identyfikatora użytkownika i tokena.
+
+        Argumenty:
+            request: Obiekt HttpRequest.
+            uidb64: Identyfikator użytkownika zakodowany w base64.
+            token: Token używany do weryfikacji aktywacji konta.
+
+        Zwraca:
+            Przekierowuje użytkownika na stronę logowania po udanej aktywacji.
+            W przypadku niepowodzenia aktywacji, wyświetla komunikat o błędzie i przekierowuje użytkownika
+            na stronę rejestracji.
+    """
     User = get_user_model()
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
@@ -67,18 +93,47 @@ def activate(request, uidb64, token):
 
 @login_required
 def profile(request):
+    """
+        Wyświetla profil użytkownika, pokazując kursy, do których jest zapisany.
+
+        Argumenty:
+            request: Obiekt HttpRequest.
+
+        Zwraca:
+            Renderuje szablon profilu użytkownika z listą kursów, do których jest zapisany.
+    """
     enrollments = Enrollment.objects.filter(student_id=request.user).values_list('course_id', flat=True)
     course = Course.objects.filter(pk__in=enrollments)
     return render(request, 'users/profile.html', {'courses': course})
 
 @login_required
 def degrees(request):
+    """
+       Wyświetla stopnie użytkownika, pokazując kursy, do których jest zapisany.
+
+       Argumenty:
+           request: Obiekt HttpRequest.
+
+       Zwraca:
+           Renderuje szablon stopni użytkownika z listą kursów, do których jest zapisany.
+    """
     enrollments = Enrollment.objects.filter(student_id=request.user).values_list('course_id', flat=True)
     course = Course.objects.filter(pk__in=enrollments)
     return render(request, 'users/degrees.html', {'courses': course})
 
 @login_required
 def degrees_course(request, course_id):
+    """
+        Wyświetla stopnie kursu dla danego użytkownika.
+
+        Argumenty:
+            request: Obiekt HttpRequest.
+            course_id: Identyfikator kursu.
+
+        Zwraca:
+            Renderuje szablon stopni kursu użytkownika z przypisanymi zadaniami i ocenami.
+    """
+
     topics = Topic.objects.filter(course=course_id)
     assignments = Assignment.objects.filter(topic__in=topics)
     prof = Profile.objects.get(user_id=request.user.id)
@@ -117,6 +172,16 @@ def degrees_course(request, course_id):
 
 @login_required
 def update_profile(request):
+    """
+       Pozwala użytkownikowi zaktualizować swoje dane osobowe.
+
+       Argumenty:
+           request: Obiekt HttpRequest.
+
+       Zwraca:
+           Renderuje szablon aktualizacji profilu użytkownika z formularzami aktualizacji danych osobowych.
+    """
+
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)

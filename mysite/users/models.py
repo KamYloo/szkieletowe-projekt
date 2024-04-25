@@ -3,6 +3,17 @@ from django.contrib.auth.models import User
 from PIL import Image
 
 class Profile(models.Model):
+	"""
+	    Model przechowujący dane profilowe użytkownika.
+
+	    Atrybuty:
+	        user (OneToOneField): Pole do powiązania profilu z użytkownikiem.
+	        profile_pic (ImageField): Pole do przechowywania zdjęcia profilowego.
+
+	    Metody:
+	        __str__(): Zwraca reprezentację tekstową profilu.
+
+	"""
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	profile_pic = models.ImageField(default="default.png", upload_to="profile_pics")
 

@@ -8,7 +8,27 @@ from chat.models import Thread, ChatMessage
 User = get_user_model()
 
 class ChatConsumer(AsyncConsumer):
+    """
+        Konsumer obsługujący połączenia WebSocket dla czatu.
+
+        Metody:
+            websocket_connect(self, event): Metoda wywoływana przy nawiązaniu połączenia WebSocket.
+            websocket_receive(self, event): Metoda wywoływana przy otrzymaniu wiadomości WebSocket.
+            websocket_disconnect(self, event): Metoda wywoływana przy rozłączeniu połączenia WebSocket.
+            chat_message(self, event): Metoda wysyłająca wiadomość czatu do klienta WebSocket.
+            get_user_object(self, user_id): Metoda asynchroniczna pobierająca obiekt użytkownika z bazy danych.
+            get_thread(self, thread_id): Metoda asynchroniczna pobierająca obiekt wątku z bazy danych.
+            create_chat_message(self, thread, user, msg): Metoda asynchroniczna tworząca nową wiadomość czatu w bazie danych.
+
+    """
     async def websocket_connect(self, event):
+        """
+                Metoda wywoływana przy nawiązaniu połączenia WebSocket.
+
+                Argumenty:
+                    event (dict): Zdarzenie nawiązania połączenia WebSocket.
+
+        """
         print('connected', event)
         user = self.scope['user']
         chat_room = f'user_chatroom_{user.id}'
@@ -22,6 +42,13 @@ class ChatConsumer(AsyncConsumer):
         })
 
     async def websocket_receive(self, event):
+        """
+               Metoda wywoływana przy otrzymaniu wiadomości WebSocket.
+
+               Argumenty:
+                   event (dict): Zdarzenie otrzymania wiadomości WebSocket.
+
+        """
         print('receive', event)
         received_data = json.loads(event['text'])
         msg = received_data.get('message')
@@ -78,9 +105,23 @@ class ChatConsumer(AsyncConsumer):
 
 
     async def websocket_disconnect(self, event):
+        """
+                Metoda wywoływana przy rozłączeniu połączenia WebSocket.
+
+                Argumenty:
+                    event (dict): Zdarzenie rozłączenia połączenia WebSocket.
+
+         """
         print('disconnect', event)
 
     async def chat_message(self, event):
+        """
+               Metoda wysyłająca wiadomość czatu do klienta WebSocket.
+
+               Argumenty:
+                   event (dict): Zdarzenie wysłania wiadomości czatu.
+
+        """
         print('chat_message', event)
         await self.send({
             'type': 'websocket.send',
@@ -89,6 +130,16 @@ class ChatConsumer(AsyncConsumer):
 
     @database_sync_to_async
     def get_user_object(self, user_id):
+        """
+                Metoda asynchroniczna pobierająca obiekt użytkownika z bazy danych.
+
+                Argumenty:
+                    user_id (int): Identyfikator użytkownika.
+
+                Zwraca:
+                    User: Obiekt użytkownika lub None, jeśli użytkownik nie istnieje.
+
+        """
         try:
             user = User.objects.select_related('profile').get(id=user_id)
             return user
@@ -97,6 +148,16 @@ class ChatConsumer(AsyncConsumer):
 
     @database_sync_to_async
     def get_thread(self, thread_id):
+        """
+               Metoda asynchroniczna pobierająca obiekt wątku z bazy danych.
+
+               Argumenty:
+                   thread_id (int): Identyfikator wątku.
+
+               Zwraca:
+                   Thread: Obiekt wątku lub None, jeśli wątek nie istnieje.
+
+        """
         q = Thread.objects.filter(id=thread_id)
         if q.exists():
             obj = q.first()
@@ -106,4 +167,13 @@ class ChatConsumer(AsyncConsumer):
 
     @database_sync_to_async
     def create_chat_message(self, thread, user, msg):
+        """
+               Metoda asynchroniczna tworząca nową wiadomość czatu w bazie danych.
+
+               Argumenty:
+                   thread (Thread): Obiekt wątku czatu.
+                   user (User): Obiekt użytkownika wysyłającego wiadomość.
+                   msg (str): Treść wiadomości.
+
+        """
         ChatMessage.objects.create(thread=thread, user=user, message=msg)

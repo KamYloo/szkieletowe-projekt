@@ -1,6 +1,5 @@
-// Bind click event to the "i" icon
+
 $('.fa-paper-plane').on('click', function() {
-    // Trigger form submission
     $('#send_message_form').submit();
 });
 
