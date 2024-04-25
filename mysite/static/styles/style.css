@@ -567,6 +567,23 @@ header .btn:hover a {
   color: #fff;
 }
 
+@media (max-width: 604px){
+    .search_course{
+      width: 100%;
+    }
+}
+
+.search_course{
+  padding-left: 20px;
+  padding-right: 20px;
+  
+}
+
+.search_course .search-select{
+  display: flex;
+  justify-content: center;
+}
+
 .search_course label {
   background-color: #fff;
   padding: 10px 10px;
@@ -575,7 +592,13 @@ header .btn:hover a {
   gap: 1rem;
   height: 2.2rem;
   border-radius: 4px;
-    margin-top: 2px;
+  margin-top: 2px;
+}
+
+.search-select select{
+  width: 30%;
+  border-radius: 5px;
+  margin: 5px;
 }
 
 .search_course .fa-solid.fa-magnifying-glass {
