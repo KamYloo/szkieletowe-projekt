@@ -729,6 +729,10 @@ header .btn:hover a {
   margin-bottom: 2rem;
 }
 
+.courses_list a{
+  text-decoration: none;
+}
+
 .courses_list .course .fa-solid.fa-xmark {
   position: absolute;
   right: 1rem;
@@ -760,8 +764,8 @@ header .btn:hover a {
 }
 
 .courses_list .course:hover {
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  box-shadow: rgba(50, 50, 93, 0.455) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.547) 0px 8px 16px -8px;
 }
 
 .course img {

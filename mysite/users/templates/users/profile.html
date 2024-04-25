@@ -26,13 +26,16 @@
 
 <section class="courses_list">
     {% for course in courses %}
-    <div class="course">
-        <img src="{{course.image.url}}" alt="" />
-        <p class="tittle">{{ course.title }}</p>
-        <p class="description">
-            {{course.description}}
-        </p>
-    </div>
+    <a href="{% url 'enroll_to_course' course.id %}">
+        <div class="course">
+            <img src="{{course.image.url}}" alt="" />
+            <p class="tittle">{{ course.title }}</p>
+            <p class="description">
+                {{course.description}}
+            </p>
+        </div>
+    </a>
+
     {% endfor %}
     <!--        <div class="course">-->
     <!--            <img src="{% static 'images/default_course.jpg' %}" alt="">-->
