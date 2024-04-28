@@ -6,6 +6,20 @@
       <img src="{% static 'images/logo.png' %}" alt="">
       <p>SkillForge </p>
     </a>
+    <div class="dropdown-menu">
+      <div class="dropmenu-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+        </svg>
+      </div>
+      <ul class="menu-list">
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'courses' %}">Courses</a></li>
+          <li><a href="{% url 'chat' %}">Chat</a></li>
+          <li><a href="#">Help</a></li>
+      </ul>
+    </div>
   </div>
   <nav id="nav-bar">
     <ul>
@@ -63,3 +77,4 @@
   <li class="btn"><a href="{% url 'login' %}">Login</a></li>
   {% endif %}
 </header>
+<script src="{% static 'js/dropmenu.js' %}"></script>
