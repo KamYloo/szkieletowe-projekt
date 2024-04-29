@@ -3,89 +3,94 @@
 
 {% block content %}
 <div class="title_chat">
-        <div class="text_">
-          <h2>Chat Room</h2>
-        </div>
+  <div class="text_">
+    <h2>Chat Room</h2>
+  </div>
+</div>
+<section class="chat_layout">
+
+  <div class="chat_box">
+    <div class="user_list">
+      <form class="search_course" id="search_form" method="GET" action="#">
+        {% csrf_token %}
+        <label>
+          <input type="text" id="search_thread_input" placeholder="Search person" />
+          <ion-icon class="fa-solid fa-magnifying-glass"></ion-icon>
+        </label>
+      </form>
+      <div class="list_to_search not-visible" id="results_box">
       </div>
-      <section class="chat_layout">
+      <ul class="contacts">
+        {% for thread in Threads %}
+        <li class="{% if forloop.first %}active{% endif %} contact-li" chat-id="chat_{{ thread.id }}"
+          style="cursor: pointer">
 
-        <div class="chat_box">
-            <div class="user_list">
-              <form class="search_course" id="search_form" method="GET" action="#">
-                  {% csrf_token %}
-                <label>
-                  <input type="text" id="search_thread_input" placeholder="Search person" />
-                  <ion-icon class="fa-solid fa-magnifying-glass"></ion-icon>
-                </label>
-              </form>
-                <div class="list_to_search not-visible" id="results_box">
-              </div>
-              <ul class="contacts">
-                {% for thread in Threads %}
-                <li class="{% if forloop.first %}active{% endif %} contact-li"
-                  chat-id="chat_{{ thread.id }}"
-                    style="cursor: pointer">
-
-                    {% if thread.first_person == user %}
-                        <img src="{{ thread.second_person.profile.profile_pic.url }}" alt="">
-                        <p>{{ thread.second_person.first_name }} {{ thread.second_person.last_name }}</p>
-                    {% else %}
-                        <img src="{{ thread.first_person.profile.profile_pic.url }}" alt="">
-                        <p>{{ thread.first_person.first_name }} {{ thread.first_person.last_name }}</p>
-                    {% endif %}
-                  <i class="fa-regular fa-comments"></i>
-                <a class="delete_thread" href="{% url 'delete_thread' thread.id %}"><i class="fa-solid fa-user-xmark"></i></a>
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
-            <div class="chat_box_b">
-            {% for thread in Threads %}
-            <div  class="chat {% if forloop.first %}hide is_active{% else %}hide{% endif %}"
-              chat-id="chat_{{ thread.id }}"
-              other-user-id="
+          {% if thread.first_person == user %}
+          <img src="{{ thread.second_person.profile.profile_pic.url }}" alt="">
+          <p>{{ thread.second_person.first_name }} {{ thread.second_person.last_name }}</p>
+          {% else %}
+          <img src="{{ thread.first_person.profile.profile_pic.url }}" alt="">
+          <p>{{ thread.first_person.first_name }} {{ thread.first_person.last_name }}</p>
+          {% endif %}
+          <i class="fa-regular fa-comments"></i>
+          <a class="delete_thread" href="{% url 'delete_thread' thread.id %}"><i class="fa-solid fa-user-xmark"></i></a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="chat_box_b">
+      {% for thread in Threads %}
+      <div class="chat {% if forloop.first %}hide is_active{% else %}hide{% endif %}" chat-id="chat_{{ thread.id }}"
+        other-user-id="
                                         {% if thread.first_person == user %}
                                             {{ thread.second_person.id }}
                                         {% else %}
                                             {{ thread.first_person.id }}
                                         {% endif %}
                                     ">
-              <div class="my_1 msg_card_body">
-                {% for chat in thread.chat_message_thread.all %}
-                  {% if chat.user == user %}
-                  <div class="my_message">
-                  <div class="message_content">
-                      <h6>{{ chat.user.first_name }} {{ chat.user.last_name }}</h6>
-                      <div class="message">
-                          <p>{{ chat.message }}</p>
-                      </div>
-                  </div>
-                  <img src="{{ chat.user.profile.profile_pic.url }}" alt="">
-                  </div>
-                  {% else %}
-                   <div class="recipent_message">
-                    <img src="{{ chat.user.profile.profile_pic.url }}" alt="">
-                    <div class="message_content">
-                        <h6>{{ chat.user.first_name }} {{ chat.user.last_name }}</h6>
-                        <div class="message">
-                            <p>{{ chat.message }}</p>
-                        </div>
-                    </div>
-                   </div>
-                  {% endif %}
-                  {% endfor %}
-              </div>
-
-            </div>
-            {% endfor %}
-            <div class="send_message">
-                <form action="" id="send_message_form">
-                  <input type="text" name id="input_messages" placeholder="Wyslij wiadomosc" >
-                  <i class="fa-regular fa-paper-plane" ></i>
-                </form>
+        <div class="my_1 msg_card_body">
+          {% for chat in thread.chat_message_thread.all %}
+          {% if chat.user == user %}
+          <div class="my_message">
+            <div class="message_content">
+              <h6>{{ chat.user.first_name }} {{ chat.user.last_name }}</h6>
+              <div class="message">
+                <p>{{ chat.message }}</p>
               </div>
             </div>
+            <img src="{{ chat.user.profile.profile_pic.url }}" alt="">
+          </div>
+          {% else %}
+          <div class="recipent_message">
+            <img src="{{ chat.user.profile.profile_pic.url }}" alt="">
+            <div class="message_content">
+              <h6>{{ chat.user.first_name }} {{ chat.user.last_name }}</h6>
+              <div class="message">
+                <p>{{ chat.message }}</p>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
         </div>
-      </section>
-    <script src="{% static 'js/live_search_users.js' %}"></script>
+
+      </div>
+      {% endfor %}
+      <div class="send_message">
+        <form action="" id="send_message_form">
+          <input type="text" name id="input_messages" placeholder="Wyslij wiadomosc">
+          <i class="fa-regular fa-paper-plane"></i>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="{% static 'js/live_search_users.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="{% static 'js/messages.js' %}"></script>
 {% endblock %}
