@@ -644,6 +644,7 @@ header .btn:hover a {
   background-color: #fff;
   padding: 10px 10px;
   display: flex;
+  justify-content: end;
   align-items: center;
   gap: 1rem;
   height: 2.2rem;
@@ -660,7 +661,7 @@ header .btn:hover a {
 .search_course .fa-solid.fa-magnifying-glass {
   width: 2rem;
   height: 1rem;
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
   text-decoration: none;
 }
 
