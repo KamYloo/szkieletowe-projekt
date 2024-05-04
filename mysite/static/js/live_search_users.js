@@ -1,9 +1,37 @@
+/**
+ * Adres URL bieżącej strony internetowej.
+ * @type {string}
+ */
 const url = window.location.href
+
+/**
+ * Formularz wyszukiwania.
+ * @type {HTMLElement}
+ */
 const searchForm = document.getElementById('search_form')
+
+/**
+ * Pole wprowadzania tekstu wyszukiwania.
+ * @type {HTMLElement}
+ */
 const searchInput = document.getElementById('search_thread_input')
+
+/**
+ * Kontener na wyniki wyszukiwania.
+ * @type {HTMLElement}
+ */
 const resultsBox = document.getElementById('results_box')
 
+/**
+ * Token CSRF używany do zabezpieczenia przed atakami CSRF.
+ * @type {string}
+ */
 const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value
+
+/**
+ * Wysyła dane wyszukiwania za pomocą żądania AJAX.
+ * @param {string} users - Wprowadzone przez użytkownika wyszukiwanie.
+ */
 const sendSearchData = (users) => {
     $.ajax({
         type: 'POST',
@@ -43,8 +71,13 @@ const sendSearchData = (users) => {
     })
 }
 
-
-
+/**
+ * Obsługuje zdarzenie wciśnięcia klawisza podczas wprowadzania tekstu wyszukiwania.
+ * @event keyup
+ * @memberof HTMLInputElement
+ * @name searchInput
+ * @param {KeyboardEvent} e - Obiekt zdarzenia klawisza.
+ */
 searchInput.addEventListener('keyup', e=> {
     console.log(e.target.value)
 
