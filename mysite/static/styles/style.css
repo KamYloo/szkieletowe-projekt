@@ -502,6 +502,7 @@ header .btn:hover a {
   scroll-behavior: smooth;
   box-shadow: 0 1.5rem 3rem -0.75rem hsla(0, 0%, 0%, 0.25);
   border-radius: 0.5rem;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .slider img {

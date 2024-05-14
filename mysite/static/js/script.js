@@ -17,6 +17,30 @@ function toggleMenu() {
   subMenu.classList.toggle("open_menu");
 }
 
+
+document.addEventListener("DOMContentLoaded", function() {
+    const slides = document.querySelectorAll(".slider img");
+    const slideCount = slides.length;
+    let currentIndex = 0;
+
+    function showSlide(index) {
+      if (index < 0 || index >= slideCount) return;
+      slides.forEach(slide => {
+        slide.style.display = "none";
+      });
+      slides[index].style.display = "block";
+      currentIndex = index;
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % slideCount;
+      showSlide(currentIndex);
+    }
+
+    setInterval(nextSlide, 6000);
+  });
+
+
 /**
  * Dodaje nasłuchiwanie zdarzenia kliknięcia dla każdego elementu opcji tematów
  * i przełącza klasę "topic_seetings".
