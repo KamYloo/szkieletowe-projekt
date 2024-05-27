@@ -5,6 +5,7 @@
 
 Welcome to skillforge documentation's documentation!
 ====================================================
+SkillForge to platforma do kształcenia zdalnego, zapewniająca narzędzia i zasoby dla edukatorów i uczniów.
 
 .. toctree::
    :maxdepth: 2

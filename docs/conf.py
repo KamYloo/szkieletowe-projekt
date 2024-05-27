@@ -14,6 +14,8 @@ django.setup()
 
 
 project = 'skillforge documentation'
+html_title = 'Dokumentacja SkillForge'
+html_short_title = 'SkillForge'
 copyright = '2024, admin'
 author = 'admin'
 release = '1.0.0'
