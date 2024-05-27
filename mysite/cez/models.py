@@ -5,6 +5,8 @@ from datetime import datetime, timedelta
 import shutil
 import os
 from PIL import Image
+from django.core.files.storage import default_storage as storage
+from io import BytesIO
 
 class Topic(models.Model):
     """
@@ -199,13 +201,16 @@ class Course(models.Model):
     def save(self, *args, **kwargs):
         super(Course, self).save(*args, **kwargs)
 
-        img = Image.open(self.image.path)
+        image_read = storage.open(self.image.name, "r")
+        img = Image.open(image_read)
 
         if img.height > 612 or img.width > 408:
+            imageBuffer = BytesIO()
             output_size = (612, 408)
             img.thumbnail(output_size)
-            img.save(self.image.path)
+            img.save(imageBuffer, img.format)
 
+        image_read.close()
 
 class Enrollment(models.Model):
     """

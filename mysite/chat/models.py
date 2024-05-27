@@ -3,6 +3,7 @@ from users.models import Profile
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
 from django.db.models import Q
+from django.core.files.storage import default_storage
 
 class ThreadManager(models.Manager):
     """

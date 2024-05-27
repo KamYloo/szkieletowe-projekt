@@ -157,6 +157,10 @@ def submit_assignment(request, assignment_id):
     if request.method == 'POST':
         form = SubmissionForm(request.POST, request.FILES, instance=submission_instance)
         if form.is_valid():
+            file_size = request.FILES['file'].size
+            if file_size > 10 * 1024 * 1024:
+                messages.error(request, 'File size exceeds the limit (10MB).')
+                return redirect('assignment-submit', assignment_id)
             form.instance.assignment = assignment
             form.instance.student = request.user
             form.save()
@@ -205,6 +209,7 @@ def create_course(request):
             enrollment.save()
             logger.info(f'User {request.user} created course {course}.')
             return redirect('courses')
+            # return render(request, 'courses')
     else:
         form = CourseForm()
     return render(request, 'cez/create_course_form.html', {'form': form})

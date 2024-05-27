@@ -134,12 +134,32 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+
+from google.oauth2 import service_account
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'static'),
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# STATICFILES_STORAGE = 'mysite.gcloud.Static'
+STORAGES = {
+    "staticfiles": {
+        "BACKEND":  'mysite.gcloud.Static'
+    },
+    "default": {
+        "BACKEND":  'mysite.gcloud.Media'
+    }
+}
+# DEFAULT_FILE_STORAGE = 'mysite.gcloud.Media'
+# STORAGES = {"default": {"BACKEND": "storages.backends.gcloud.GoogleCloudStorage"}}
+GS_BUCKET_NAME = 'szkieletowe'
+GS_FILE_OVERWRITE = False
+# MEDIA_URL = 'https://storage.googleapis.com/{}/'.format(GS_BUCKET_NAME)
+
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    os.path.join(BASE_DIR, 'credential.json'))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
