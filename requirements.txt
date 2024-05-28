@@ -7,3 +7,8 @@ crispy-bootstrap5==2024.2
 django-recaptcha==4.0.0
 django-utils-six==2.0
 channels==3.0.5
+sphinx
+sphinx-rtd-theme
+django-extensions
+django-storages
+google-cloud-storage

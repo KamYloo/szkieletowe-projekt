@@ -3,107 +3,109 @@
 {% load file_name %}
 {% block content %}
 <div class="courses_layout" xmlns="http://www.w3.org/1999/html">
-        <h1>Select Course</h1>
-        <form class="search_course" method="GET" action="#">
-          <label>
-            <input name="title" placeholder="Search course" value="{% if title != None %}{{ title }}{% endif %}"/>
-            <ion-icon class="fa-solid fa-magnifying-glass" ></ion-icon>
-          </label>
+  <h1>Select Course</h1>
+  <form class="search_course" method="GET" action="#">
+    <label>
+      <input name="title" placeholder="Search course" value="{% if title != None %}{{ title }}{% endif %}" />
+      <ion-icon class="fa-solid fa-magnifying-glass"></ion-icon>
+    </label>
+    <div class="search-select">
+      <select name="degree_id">
+        <option value="" selected disabled hidden>Stopień</option>
+        <option value="1">Stopień 1</option>
+        <option value="2">Stopień 2</option>
+        <option value="3">Stopień 3</option>
+        <option value="4">Studia Podyplomowe</option>
+        <option value="5">Przedmioty Obieralne</option>
+      </select>
 
-          <select name="degree_id">
-            <option value="" selected disabled hidden>Stopień</option>
-            <option value="1">Stopień 1</option>
-            <option value="2">Stopień 2</option>
-            <option value="3">Stopień 3</option>
-            <option value="4">Studia Podyplomowe</option>
-            <option value="5">Przedmioty Obieralne</option>
-          </select>
+      <select name="semester_id">
+        <option value="" selected disabled hidden>Semestr</option>
+        <option value="1">Semestr 1</option>
+        <option value="2">Semestr 2</option>
+        <option value="3">Semestr 3</option>
+        <option value="4">Semestr 4</option>
+        <option value="5">Semestr 5</option>
+        <option value="6">Semestr 6</option>
+        <option value="7">Semestr 7</option>
+      </select>
+    </div>
 
-          <select name="semester_id">
-            <option value="" selected disabled hidden>Semestr</option>
-            <option value="1">Semestr 1</option>
-            <option value="2">Semestr 2</option>
-            <option value="3">Semestr 3</option>
-            <option value="4">Semestr 4</option>
-            <option value="5">Semestr 5</option>
-            <option value="6">Semestr 6</option>
-            <option value="7">Semestr 7</option>
-          </select>
-        </form>
-<!--        <div class="filters">-->
-<!--          <div class="select_filter">-->
-<!--            <div class="select-btn" id="select-btn1">-->
-<!--              <span id="text text1">Stopień</span>-->
-<!--              <ion-icon class="fa-solid fa-caret-down"></ion-icon>-->
-<!--            </div>-->
-<!--            <ul class="list">-->
-<!--              <li class="option option1" style="&#45;&#45;i: 7">-->
-<!--                <span class="option-text">1 Stopień</span>-->
-<!--              </li>-->
-<!--              <li class="option option1" style="&#45;&#45;i: 6">-->
-<!--                <span class="option-text">2 Stopień</span>-->
-<!--              </li>-->
-<!--              <li class="option option1" style="&#45;&#45;i: 5">-->
-<!--                <span class="option-text">3 Stopień</span>-->
-<!--              </li>-->
-<!--              <li class="option option1" style="&#45;&#45;i: 4">-->
-<!--                <span class="option-text">Przedmioty Obierlane</span>-->
-<!--              </li>-->
-<!--              <li class="option option1" style="&#45;&#45;i: 3">-->
-<!--                <span class="option-text">Seminaria Dyplomowe</span>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--          </div>-->
-<!--          <div class="select_filter">-->
-<!--            <div class="select-btn" id="select-btn2">-->
-<!--              <span id="text text2">Semestr</span>-->
-<!--              <ion-icon class="fa-solid fa-caret-down"></ion-icon>-->
-<!--            </div>-->
-<!--            <ul class="list">-->
-<!--              <li class="option option2" style="&#45;&#45;i: 7">-->
-<!--                <span class="option-text">Semestr 1</span>-->
-<!--              </li>-->
-<!--              <li class="option option2" style="&#45;&#45;i: 6">-->
-<!--                <span class="option-text">Semestr 2</span>-->
-<!--              </li>-->
-<!--              <li class="option option2" style="&#45;&#45;i: 5">-->
-<!--                <span class="option-text">Semestr 3</span>-->
-<!--              </li>-->
-<!--              <li class="option option2" style="&#45;&#45;i: 4">-->
-<!--                <span class="option-text">Semestr 4</span>-->
-<!--              </li>-->
-<!--              <li class="option option2" style="&#45;&#45;i: 3">-->
-<!--                <span class="option-text">Semestr 5</span>-->
-<!--              </li>-->
-<!--              <li class="option option2" style="&#45;&#45;i: 2">-->
-<!--                <span class="option-text">Semestr 6</span>-->
-<!--              </li>-->
-<!--              <li class="option option2" style="&#45;&#45;i: 1">-->
-<!--                <span class="option-text">Semestr 7</span>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-    {% if request.user|has_group:"Nauczyciel" %}
-   <div class="create_course_button">
-          <a href="{% url 'create-course' %}">Create new Course</a>
-        </div>
-     {% endif %}
-      <section class="courses_list">
-        {% for course in courses %}
-        <div class="course">
-            {% if request.user.id == course.teacher.id %}
-            <a class="delete_course" href="{% url 'delete_course' course.id %}"><i class="fa-solid fa-xmark"></i></a>
-            {% endif %}
-          <img src="{{course.image.url}}" alt="" />
-          <p class="tittle">{{ course.title }}</p>
-          <p class="description">
-            {{course.description}}
-          </p>
-          <a href="{% url 'enroll_to_course' course.id %}" class="join_button" >Join</a>
-        </div>
-        {% endfor %}
-      </section>
+  </form>
+  <!--        <div class="filters">-->
+  <!--          <div class="select_filter">-->
+  <!--            <div class="select-btn" id="select-btn1">-->
+  <!--              <span id="text text1">Stopień</span>-->
+  <!--              <ion-icon class="fa-solid fa-caret-down"></ion-icon>-->
+  <!--            </div>-->
+  <!--            <ul class="list">-->
+  <!--              <li class="option option1" style="&#45;&#45;i: 7">-->
+  <!--                <span class="option-text">1 Stopień</span>-->
+  <!--              </li>-->
+  <!--              <li class="option option1" style="&#45;&#45;i: 6">-->
+  <!--                <span class="option-text">2 Stopień</span>-->
+  <!--              </li>-->
+  <!--              <li class="option option1" style="&#45;&#45;i: 5">-->
+  <!--                <span class="option-text">3 Stopień</span>-->
+  <!--              </li>-->
+  <!--              <li class="option option1" style="&#45;&#45;i: 4">-->
+  <!--                <span class="option-text">Przedmioty Obierlane</span>-->
+  <!--              </li>-->
+  <!--              <li class="option option1" style="&#45;&#45;i: 3">-->
+  <!--                <span class="option-text">Seminaria Dyplomowe</span>-->
+  <!--              </li>-->
+  <!--            </ul>-->
+  <!--          </div>-->
+  <!--          <div class="select_filter">-->
+  <!--            <div class="select-btn" id="select-btn2">-->
+  <!--              <span id="text text2">Semestr</span>-->
+  <!--              <ion-icon class="fa-solid fa-caret-down"></ion-icon>-->
+  <!--            </div>-->
+  <!--            <ul class="list">-->
+  <!--              <li class="option option2" style="&#45;&#45;i: 7">-->
+  <!--                <span class="option-text">Semestr 1</span>-->
+  <!--              </li>-->
+  <!--              <li class="option option2" style="&#45;&#45;i: 6">-->
+  <!--                <span class="option-text">Semestr 2</span>-->
+  <!--              </li>-->
+  <!--              <li class="option option2" style="&#45;&#45;i: 5">-->
+  <!--                <span class="option-text">Semestr 3</span>-->
+  <!--              </li>-->
+  <!--              <li class="option option2" style="&#45;&#45;i: 4">-->
+  <!--                <span class="option-text">Semestr 4</span>-->
+  <!--              </li>-->
+  <!--              <li class="option option2" style="&#45;&#45;i: 3">-->
+  <!--                <span class="option-text">Semestr 5</span>-->
+  <!--              </li>-->
+  <!--              <li class="option option2" style="&#45;&#45;i: 2">-->
+  <!--                <span class="option-text">Semestr 6</span>-->
+  <!--              </li>-->
+  <!--              <li class="option option2" style="&#45;&#45;i: 1">-->
+  <!--                <span class="option-text">Semestr 7</span>-->
+  <!--              </li>-->
+  <!--            </ul>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--      </div>-->
+  {% if request.user|has_group:"Nauczyciel" %}
+  <div class="create_course_button">
+    <a href="{% url 'create-course' %}">Create new Course</a>
+  </div>
+  {% endif %}
+  <section class="courses_list">
+    {% for course in courses %}
+    <div class="course">
+      {% if request.user.id == course.teacher.id %}
+      <a class="delete_course" href="{% url 'delete_course' course.id %}"><i class="fa-solid fa-xmark"></i></a>
+      {% endif %}
+      <img src="{{course.image.url}}" alt="" />
+      <p class="tittle">{{ course.title }}</p>
+      <p class="description">
+        {{course.description}}
+      </p>
+      <a href="{% url 'enroll_to_course' course.id %}" class="join_button">Join</a>
+    </div>
+    {% endfor %}
+  </section>
 </div>
 {% endblock %}

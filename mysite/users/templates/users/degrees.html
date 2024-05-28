@@ -5,7 +5,7 @@
 {% block content %}
 <div class="degrees_profile">
     <img src="{{ user.profile.profile_pic.url }}" alt="profile picture">
-    <div>
+    <div class="degrees-profile-data">
       <h2>{{ user.first_name }} {{ user.last_name }}</h2>
       <h3>{{ user.username }}</h3>
     </div>
@@ -24,7 +24,7 @@
     <a href="{% url 'degrees_course' course.id %}">
       <li class="course-degrees-block">
           <p class="degrees_course_name">{{ course.title }}</p> 
-          <p class="degrees_course_degrees">5</p>
+          <p class="degrees_course_degrees">-</p>
       </li>
     </a>
     {% endfor %}

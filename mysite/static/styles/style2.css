@@ -66,6 +66,13 @@
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 
   max-width: 15%;
+  min-width: 200px;
+}
+
+@media (max-width: 800px) {
+  .participants{
+    display: none;
+  }
 }
 
 .participants_title {
@@ -505,8 +512,9 @@ input[type="file"].custom-file-input {
   height: 40rem;
   width: 90rem;
   border: solid 2px black;
-  grid-template-columns: 2fr 5fr;
-  display: grid;
+  display: flex;
+  /* grid-template-columns: 2fr 5fr; */
+  /* display: grid; */
 }
 
 .user_list {
@@ -518,7 +526,7 @@ input[type="file"].custom-file-input {
 }
 
 .chat {
-  width: 68rem;
+  /* width: 68rem; */
   border-left: solid 2px black;
 }
 
@@ -539,11 +547,11 @@ input[type="file"].custom-file-input {
 }
 
 .recipent_message {
-  margin-right: 50%;
+  margin-right: 20%;
 }
 
 .my_message {
-  margin-left: 50%;
+  margin-left: 20%;
   justify-content: right;
 }
 
@@ -583,12 +591,12 @@ input[type="file"].custom-file-input {
 
 .recipent_message .message_content .message p,
 .my_message .message_content .message p {
-  word-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 .send_message {
   height: 5rem;
-  width: 68rem;
+  /* width: 68rem; */
   border-left: solid 2px black;
 }
 
@@ -629,11 +637,11 @@ input[type="file"].custom-file-input {
   background: white;
   border-radius: 15px;
   display: flex;
-  margin: 1rem 1rem;
+  margin: 5px 5px;
   align-items: center;
   padding: 5px 5px;
   cursor: pointer;
-  transition: all 0.4s ease-in-out;
+  /* transition: all 0.4s ease-in-out; */
   border: solid 2px black;
 }
 
@@ -660,6 +668,48 @@ input[type="file"].custom-file-input {
   border-radius: 50%;
   padding: 10px 10px;
   font-weight: bold;
+}
+
+.chat_box_b{
+  flex-grow: 100;
+}
+
+@media (max-width: 900px){
+  .user_list{
+    position: absolute;
+    overflow: hidden;
+    width: 74px;
+  }
+
+  .user_list:hover{
+    overflow: hidden;
+    width: 300px;
+  }
+
+  .chat_box_b{
+    width: 100%;
+    padding-left: 70px;
+  }
+
+  /* .user_list .contacts li{
+    margin: 0;
+    margin-top: 1rem;
+  }
+
+  .search_course{
+    padding: 0;
+    margin: 5px;
+    margin: 5px;
+    justify-content: center;
+  }
+
+  .search_course .fa-solid.fa-magnifying-glass{
+    width: auto;
+  }
+
+  .search_course input{
+    display: none;
+  } */
 }
 
 .hide {
